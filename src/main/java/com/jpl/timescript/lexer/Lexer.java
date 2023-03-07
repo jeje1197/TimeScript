@@ -9,7 +9,10 @@ import java.util.regex.Matcher;
 // A Lexer is a component that converts a stream of text into a stream of tokens
 public final class Lexer {
     private static final Set<String> keywords = new HashSet<>(Arrays.asList(
-            "true", "false", "var"
+            "true", "false",
+            "var",
+            "if", "else",
+            "while", "break", "continue"
     ));
 
     private static final PatternNode[] patterns = {

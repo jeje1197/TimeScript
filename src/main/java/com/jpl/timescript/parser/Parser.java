@@ -4,6 +4,7 @@ import com.jpl.timescript.TimeScript;
 import com.jpl.timescript.lexer.Token;
 import com.jpl.timescript.lexer.TokenType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -27,6 +28,10 @@ public final class Parser {
         return tokens.get(current);
     }
 
+    private static Token peekNext() {
+        return hasNext() ? tokens.get(current + 1) : null;
+    }
+
     private static boolean match(TokenType type) {
         return peek().type == type;
     }
@@ -39,15 +44,40 @@ public final class Parser {
         return peek().type == TokenType.KEYWORD && peek().value.equals(keyword);
     }
 
-    private static boolean matchOp(String operator) {
-        return peek().type == TokenType.KEYWORD && peek().value.equals(operator);
+    private static boolean matchNext(TokenType type) {
+        return peekNext() != null && peekNext().type == type;
+    }
+
+    private static boolean matchNext(String value) {
+        return peekNext() != null && peekNext().value.equals(value);
+    }
+
+    private static boolean matchNext(TokenType type, String value) {
+        return peekNext() != null && peekNext().type == type && peekNext().value.equals(value);
     }
 
     private static boolean expect(TokenType type, String message) {
         if (peek().type != type) {
             TimeScript.error(message, peek().line);
+            return false;
         }
         return true;
+    }
+
+    private static boolean expect(TokenType type, String value, String message) {
+        if (peek().type != type || !peek().value.equals(value)) {
+            TimeScript.error(message, peek().line);
+            return false;
+        }
+        return true;
+    }
+
+    private static AstNode expectStatement() {
+        AstNode statement = statement();
+        if (statement == null) {
+            TimeScript.error("Expected statement", peek().line);
+        }
+        return statement;
     }
 
     private static AstNode expectExpression() {
@@ -58,16 +88,112 @@ public final class Parser {
         return expression;
     }
 
-    public static AstNode parse(List<Token> tokens) {
+    public static List<AstNode> parse(List<Token> tokens) {
         // Reset static fields before use
         Parser.tokens = tokens;
         Parser.current = 0;
-        return statement();
+
+        List<AstNode> statements = statements();
+        if (!match(TokenType.END)) {
+            TimeScript.error("Did not reach end of file", peek().line);
+        }
+        return statements;
+    }
+
+    private static List<AstNode> statements() {
+        List<AstNode> statements = new ArrayList<>();
+        while (!match(TokenType.END)) {
+            AstNode statement = statement();
+            if (statement == null) break;
+            statements.add(statement);
+        }
+
+        return statements;
     }
 
     private static AstNode statement() {
+        if (matchKeyword("var")) {
+            return variableDeclaration();
+        } else if (match(TokenType.ID) && matchNext(TokenType.OP, "=")) {
+            return variableAssignment();
+        } else if (matchKeyword("if")) {
+            return ifStatement();
+        } else if (matchKeyword("while")) {
+            return whileLoop();
+        } else if (matchKeyword("break")) {
+            return breakStatement();
+        } else if (matchKeyword("continue")) {
+            return continueStatement();
+        }
         return expression();
     }
+
+    private static AstNode variableDeclaration() {
+        Token name = null;
+        AstNode expression = null;
+        advance();
+        if (!expect(TokenType.ID, "Expected identifier")) return null;
+        name = advance();
+        if (!expect(TokenType.OP, "=", "Expected '='")) return null;
+        advance();
+        expression = expectExpression();
+        if (expression == null) return null;
+        return new AstNode.VariableDeclaration(name, expression);
+    }
+
+    private static AstNode variableAssignment() {
+        Token name = advance();
+        advance();
+        AstNode expression = expectExpression();
+        if (expression == null) return null;
+        return new AstNode.VariableAssignment(name, expression);
+    }
+
+    private static AstNode ifStatement() {
+        AstNode conditionExpression = null;
+        AstNode ifStatement = null;
+        AstNode elseStatement = null;
+        advance();
+        if (!expect(TokenType.LPAREN, "Expected '('")) return null;
+        advance();
+        conditionExpression = expectExpression();
+        if (conditionExpression == null) return null;
+        if (!expect(TokenType.RPAREN, "Expected ')'")) return null;
+        advance();
+        ifStatement = expectStatement();
+        if (ifStatement == null) return null;
+        if (matchKeyword("else")) {
+            advance();
+            elseStatement = expectStatement();
+            if (elseStatement == null) return null;
+        }
+        return new AstNode.IfStatement(conditionExpression, ifStatement, elseStatement);
+    }
+
+    public static AstNode whileLoop() {
+        AstNode conditionExpression, statement;
+        advance();
+        if (!expect(TokenType.LPAREN, "Expected '('")) return null;
+        advance();
+        conditionExpression = expectExpression();
+        if (conditionExpression == null) return null;
+        if (!expect(TokenType.RPAREN, "Expected ')'")) return null;
+        advance();
+        statement = expectStatement();
+        if (statement == null) return null;
+        return new AstNode.WhileLoop(conditionExpression, statement);
+    }
+
+    private static AstNode breakStatement() {
+        advance();
+        return new AstNode.BreakStatement();
+    }
+
+    private static AstNode continueStatement() {
+        advance();
+        return new AstNode.ContinueStatement();
+    }
+
 
     private static AstNode expression() {
         return binaryOperation("comparison1", Arrays.asList("&&", "||"), "comparison1");
@@ -99,9 +225,9 @@ public final class Parser {
             case STRING:
                 advance();
                 return new AstNode.String(token);
-//            case ID:
-//                advance();
-////                return new AstNode.VariableAccess(token);
+            case ID:
+                advance();
+                return new AstNode.VariableAccess(token);
             case LPAREN: {
                 advance();
                 AstNode expression = expectExpression();

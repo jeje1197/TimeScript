@@ -9,6 +9,11 @@ public final class TSBoolean extends TSObject {
     }
 
     @Override
+    public boolean isTruthy() {
+        return value;
+    }
+
+    @Override
     public String toString() {
         return value.toString();
     }

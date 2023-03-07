@@ -19,6 +19,8 @@ public class TSObject {
         this.header = new ObjectHeader(className);
     }
 
+    public boolean isTruthy() { return true; }
+
     @Override
     public String toString() {
         return "<class '" + header.className + '>';

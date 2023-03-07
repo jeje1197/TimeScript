@@ -2,6 +2,7 @@ package com.jpl.timescript;
 
 import com.jpl.timescript.interpreter.ExecutionEngine;
 import com.jpl.timescript.interpreter.datatypes.TSObject;
+import com.jpl.timescript.interpreter.environment.Environment;
 import com.jpl.timescript.lexer.Lexer;
 import com.jpl.timescript.lexer.Token;
 import com.jpl.timescript.parser.AstNode;
@@ -16,8 +17,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public final class TimeScript {
-//    private static Environment globalEnvironment = new Environment();
-    private static ExecutionEngine engine = new ExecutionEngine();
+    private static Environment globalEnvironment = new Environment();
+    private static ExecutionEngine engine = new ExecutionEngine(globalEnvironment);
     private static boolean hadError = false;
     private static boolean hadRuntimeError = false;
 
@@ -55,22 +56,20 @@ public final class TimeScript {
     }
 
     public static void run(String code) {
-        System.out.println("Code: " + code);
         List<Token> tokens = Lexer.getTokens(code);
 
-        System.out.println("Program tokens:");
-        for (Token token: tokens) {
-            System.out.println(token);
-        }
+//        System.out.println("Program tokens:");
+//        for (Token token: tokens) {
+//            System.out.println(token);
+//        }
 
-        if (hadError) {
-            return;
-        }
+        if (hadError) return;
 
-        AstNode node = Parser.parse(tokens);
+        List<AstNode> statements = Parser.parse(tokens);
 //        System.out.println("Program nodes:" + node);
 
-        TSObject result = node.visit(engine);
+        if (hadError) return;
+        TSObject result = engine.visit(statements);
         System.out.println(result);
     }
 

@@ -15,6 +15,10 @@ public abstract class AstNode {
         T visitVariableDeclaration(VariableDeclaration node);
         T visitVariableAssignment(VariableAssignment node);
         T visitVariableAccess(VariableAccess node);
+        T visitIfStatement(IfStatement node);
+        T visitWhileLoop(WhileLoop node);
+        T visitBreakStatement(BreakStatement node);
+        T visitContinueStatement(ContinueStatement node);
     }
 
 
@@ -120,6 +124,49 @@ public abstract class AstNode {
         @Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitVariableAccess(this);
+        }
+    }
+
+    public static class IfStatement extends AstNode {
+        public AstNode conditionExpression, ifStatement, elseStatement;
+
+        public IfStatement(AstNode conditionExpression, AstNode ifStatement, AstNode elseStatement) {
+            this.conditionExpression = conditionExpression;
+            this.ifStatement = ifStatement;
+            this.elseStatement = elseStatement;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitIfStatement(this);
+        }
+    }
+
+    public static class WhileLoop extends AstNode {
+        public AstNode conditionExpression, statement;
+
+        public WhileLoop(AstNode conditionExpression, AstNode statement) {
+            this.conditionExpression = conditionExpression;
+            this.statement = statement;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitWhileLoop(this);
+        }
+    }
+
+    public static class BreakStatement extends AstNode {
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitBreakStatement(this);
+        }
+    }
+
+    public static class ContinueStatement extends AstNode {
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitContinueStatement(this);
         }
     }
 }
