@@ -4,7 +4,6 @@ import com.jpl.timescript.TimeScript;
 import com.jpl.timescript.lexer.Token;
 import com.jpl.timescript.lexer.TokenType;
 
-import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
 
@@ -117,6 +116,12 @@ public final class Parser {
 //            case LBRACE:
 //                advance();
 //                return dictExpression();
+            case KEYWORD:
+                if (match("true") || match("false")) {
+                    advance();
+                    return new AstNode.Boolean(token);
+                }
+                break;
             case OP:
                 if (match("+") || match("-") || match("!")) {
                     advance();

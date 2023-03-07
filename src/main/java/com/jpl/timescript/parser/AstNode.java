@@ -3,21 +3,21 @@ package com.jpl.timescript.parser;
 import com.jpl.timescript.lexer.Token;
 
 public abstract class AstNode {
-    static class Number extends AstNode {
+    public static class Number extends AstNode {
         public double value;
         public Number(Token token) {
             this.value = Double.parseDouble(token.value);
         }
     }
 
-    static class String extends AstNode {
+    public static class String extends AstNode {
         public java.lang.String value;
         public String(Token token) {
             this.value = token.value;
         }
     }
 
-    static class Boolean extends AstNode {
+    public static class Boolean extends AstNode {
         public boolean value;
         public Boolean(Token token) {
             this.value = java.lang.Boolean.parseBoolean(token.value);
