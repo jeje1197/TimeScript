@@ -124,6 +124,8 @@ public final class Parser {
             return breakStatement();
         } else if (matchKeyword("continue")) {
             return continueStatement();
+        } else if (matchKeyword("return")) {
+            return returnStatement();
         }
         return expression();
     }
@@ -213,6 +215,7 @@ public final class Parser {
         if (!expect(TokenType.RPAREN, "Expected ')'")) return null;
         advance();
         if (!expect(TokenType.LBRACE, "Expected '{'")) return null;
+        advance();
         statements = statements();
         if (!expect(TokenType.RBRACE, "Expected '}'")) return null;
         advance();
@@ -237,6 +240,12 @@ public final class Parser {
         if (!expect(TokenType.RPAREN, "Expected ')'")) return null;
         advance();
         return new AstNode.FunctionCall(callee, arguments);
+    }
+
+    private static AstNode returnStatement() {
+        advance();
+        AstNode expression = expression();
+        return new AstNode.ReturnStatement(expression);
     }
 
 
@@ -297,6 +306,9 @@ public final class Parser {
                 if (match("true") || match("false")) {
                     advance();
                     return new AstNode.Boolean(token);
+                } else if (matchKeyword("null")) {
+                    advance();
+                    return new AstNode.Null();
                 } else if (match("function")) {
                     return functionDeclaration();
                 }

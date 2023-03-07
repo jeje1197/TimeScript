@@ -12,6 +12,7 @@ public abstract class AstNode {
         T visitNumber(Number node);
         T visitString(String node);
         T visitBoolean(Boolean node);
+        T visitNull(Null node);
         T visitUnaryOp(UnaryOp node);
         T visitBinaryOp(BinaryOp node);
         T visitVariableDeclaration(VariableDeclaration node);
@@ -23,6 +24,7 @@ public abstract class AstNode {
         T visitContinueStatement(ContinueStatement node);
         T visitFunction(Function node);
         T visitFunctionCall(FunctionCall node);
+        T visitReturnStatement(ReturnStatement node);
     }
 
 
@@ -59,6 +61,13 @@ public abstract class AstNode {
         @Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitBoolean(this);
+        }
+    }
+
+    public static class Null extends AstNode {
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitNull(this);
         }
     }
 
@@ -201,6 +210,19 @@ public abstract class AstNode {
         @Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitFunctionCall(this);
+        }
+    }
+
+    public static class ReturnStatement extends AstNode {
+        public AstNode expression;
+
+        public ReturnStatement(AstNode expression) {
+            this.expression = expression;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitReturnStatement(this);
         }
     }
 }

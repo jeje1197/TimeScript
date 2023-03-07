@@ -62,12 +62,11 @@ public final class TimeScript {
 //        for (Token token: tokens) {
 //            System.out.println(token);
 //        }
-
         if (hadError) return;
 
         List<AstNode> statements = Parser.parse(tokens);
-
         if (hadError) return;
+
         TSObject result = engine.visit(statements);
         System.out.println(result);
     }
@@ -77,8 +76,8 @@ public final class TimeScript {
         hadError = true;
     }
 
-    public static void runtimeError(String message, int line) throws Exception {
-        hadRuntimeError = true;
-        throw new Exception(message + ", line " + line);
-    }
+//    public static void runtimeError(String message, int line) throws Exception {
+//        hadRuntimeError = true;
+//        throw new Exception(message + ", line " + line);
+//    }
 }

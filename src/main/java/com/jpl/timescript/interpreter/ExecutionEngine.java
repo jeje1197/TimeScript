@@ -11,13 +11,16 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     Environment environment;
     private boolean shouldBreak = false;
     private boolean shouldContinue = false;
+    private boolean shouldReturn = false;
+    private TSObject returnValue = null;
+
     public ExecutionEngine(Environment environment) {
         this.environment = environment;
         addVariables();
     }
 
     private void addVariables() {
-        environment.set("print", new TSFunction() {
+        environment.set("println", new TSFunction() {
             @Override
             public int arity() {
                 return 1;
@@ -40,6 +43,8 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         TSObject returnValue = null;
         for (AstNode node: statements) {
             returnValue = node.visit(this);
+            if (shouldBreak || shouldContinue) break;
+            if (shouldReturn) break;
         }
         return returnValue;
     }
@@ -54,6 +59,10 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
     public TSObject visitBoolean(AstNode.Boolean node) {
         return new TSBoolean(node.value);
+    }
+
+    public TSObject visitNull(AstNode.Null node) {
+        return new TSNull();
     }
 
     public TSObject visitUnaryOp(AstNode.UnaryOp node) {
@@ -133,6 +142,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         }
 
         if (!(callee instanceof TSCallable)) {
+            System.out.println("Cannot be called");
             return null;
         }
 
@@ -142,6 +152,16 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
                     " received " + arguments.size());
             return null;
         }
-        return function.call(this);
+
+        function.call(this);
+        shouldReturn = false;
+        return returnValue;
+    }
+
+    @Override
+    public TSObject visitReturnStatement(AstNode.ReturnStatement node) {
+        shouldReturn = true;
+        returnValue = node.expression.visit(this);
+        return null;
     }
 }

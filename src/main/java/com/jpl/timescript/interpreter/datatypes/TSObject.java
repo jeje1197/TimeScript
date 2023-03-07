@@ -23,6 +23,6 @@ public class TSObject {
 
     @Override
     public String toString() {
-        return "<class '" + header.className + '>';
+        return "<class '" + header.className + "'>";
     }
 }
