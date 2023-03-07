@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Added flag for native function to TSFunction.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" afterDir="false" />
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Adding class definition to interpreter.">
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
     </list>
@@ -152,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678220211900</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="Adding class definition to interpreter.">
+      <created>1678222977053</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1678222977053</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -168,6 +171,7 @@
     <MESSAGE value="Created NativeApi package to modularize the addition of native data." />
     <MESSAGE value="Updated visitFunctionCall method to return values of native methods." />
     <MESSAGE value="Added flag for native function to TSFunction." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added flag for native function to TSFunction." />
+    <MESSAGE value="Adding class definition to interpreter." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adding class definition to interpreter." />
   </component>
 </project>

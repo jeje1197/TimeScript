@@ -53,6 +53,17 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     @Override
+    public TSObject visitBlockStatement(AstNode.BlockStatement node) {
+        TSObject returnValue = null;
+        for (AstNode statement: node.statements) {
+            returnValue = statement.visit(this);
+            if (shouldBreak || shouldContinue) break;
+            if (shouldReturn) break;
+        }
+        return returnValue;
+    }
+
+    @Override
     public TSObject visitVariableDeclaration(AstNode.VariableDeclaration node) {
         environment.setLocally(node.name, node.expression.visit(this));
         return null;

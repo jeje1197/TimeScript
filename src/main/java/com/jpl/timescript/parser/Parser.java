@@ -112,7 +112,9 @@ public final class Parser {
     }
 
     private static AstNode statement() {
-        if (matchKeyword("var")) {
+        if (match(TokenType.LBRACE)) {
+            return blockStatement();
+        } else if (matchKeyword("var")) {
             return variableDeclaration();
         } else if (match(TokenType.ID) && matchNext(TokenType.OP, "=")) {
             return variableAssignment();
@@ -130,6 +132,14 @@ public final class Parser {
             return classDeclaration();
         }
         return expression();
+    }
+
+    private static AstNode blockStatement() {
+        advance();
+        List<AstNode> statements = statements();
+        if (!expect(TokenType.RBRACE, "Expected '}'")) return null;
+        advance();
+        return new AstNode.BlockStatement(statements);
     }
 
     private static AstNode variableDeclaration() {

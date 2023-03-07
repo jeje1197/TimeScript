@@ -15,6 +15,7 @@ public abstract class AstNode {
         T visitNull(Null node);
         T visitUnaryOp(UnaryOp node);
         T visitBinaryOp(BinaryOp node);
+        T visitBlockStatement(BlockStatement node);
         T visitVariableDeclaration(VariableDeclaration node);
         T visitVariableAssignment(VariableAssignment node);
         T visitVariableAccess(VariableAccess node);
@@ -98,6 +99,19 @@ public abstract class AstNode {
         @Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitBinaryOp(this);
+        }
+    }
+
+    public static class BlockStatement extends AstNode {
+        public List<AstNode> statements;
+
+        public BlockStatement(List<AstNode> statements) {
+            this.statements = statements;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitBlockStatement(this);
         }
     }
 
