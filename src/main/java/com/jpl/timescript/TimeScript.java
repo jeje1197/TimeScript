@@ -2,6 +2,8 @@ package com.jpl.timescript;
 
 import com.jpl.timescript.lexer.Lexer;
 import com.jpl.timescript.lexer.Token;
+import com.jpl.timescript.parser.AstNode;
+import com.jpl.timescript.parser.Parser;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,12 +53,22 @@ public final class TimeScript {
     }
 
     public static void run(String code) {
+        System.out.println("Code: " + code);
         List<Token> tokens = Lexer.getTokens(code);
 
         System.out.println("Program tokens:");
         for (Token token: tokens) {
             System.out.println(token);
         }
+
+        if (hadError) {
+            return;
+        }
+
+        AstNode node = Parser.parse(tokens);
+        System.out.println("Program nodes:" + node);
+        System.out.println(node.getClass().getSimpleName());
+
     }
 
     public static void error(String message, int line) {
