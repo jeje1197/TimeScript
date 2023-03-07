@@ -7,12 +7,17 @@ import com.jpl.timescript.parser.AstNode;
 import java.util.List;
 
 public class TSFunction extends TSObject implements TSCallable {
-    public List<String> arguments;
+    public List<String> argumentNames;
     public List<AstNode> statements;
-    public TSFunction() { super("Function"); }
-    public TSFunction(List<String> arguments, List<AstNode> statements) {
+
+    public TSFunction(List<String> argumentNames) {
         super("Function");
-        this.arguments = arguments;
+        this.argumentNames = argumentNames;
+    }
+
+    public TSFunction(List<String> argumentNames, List<AstNode> statements) {
+        super("Function");
+        this.argumentNames = argumentNames;
         this.statements = statements;
     }
 

@@ -5,10 +5,11 @@ import com.jpl.timescript.interpreter.environment.Environment;
 import com.jpl.timescript.parser.AstNode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
-    Environment environment;
+    private Environment environment;
     private boolean shouldBreak = false;
     private boolean shouldContinue = false;
     private boolean shouldReturn = false;
@@ -20,7 +21,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     private void addVariables() {
-        environment.set("println", new TSFunction() {
+        environment.setLocally("println", new TSFunction(Arrays.asList("text")) {
             @Override
             public int arity() {
                 return 1;
@@ -28,7 +29,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
             @Override
             public TSObject call(ExecutionEngine engine) {
-                System.out.println("Print function called");
+                System.out.println(environment.get("text"));
                 return null;
             }
 
@@ -141,19 +142,27 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
             arguments.add(argument.visit(this));
         }
 
-        if (!(callee instanceof TSCallable)) {
+        if (!(callee instanceof TSFunction)) {
             System.out.println("Cannot be called");
             return null;
         }
 
-        TSCallable function = (TSCallable) callee;
+        TSFunction function = (TSFunction) callee;
         if (arguments.size() != function.arity()) {
             System.out.println("Expected " + function.arity() + " arguments, but" +
                     " received " + arguments.size());
             return null;
         }
 
+        Environment functionEnvironment = new Environment(environment);
+        for (int i = 0; i < function.arity(); i++) {
+            functionEnvironment.setLocally(function.argumentNames.get(i), arguments.get(i));
+        }
+
+        environment = functionEnvironment;
         function.call(this);
+        environment = functionEnvironment.getParent();
+
         shouldReturn = false;
         return returnValue;
     }

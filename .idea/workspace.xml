@@ -4,15 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Implemented function objects and function calls in Interpreter.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSNull.java" afterDir="false" />
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Added null keyword to language.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/environment/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/environment/Environment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678206610703</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Added null keyword to language.">
+      <created>1678209287982</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1678209287982</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -130,6 +133,7 @@
     <MESSAGE value="Created Visitor interface to make node accessing more efficient. Creating environment." />
     <MESSAGE value="Implemented if statements and while loops into the language." />
     <MESSAGE value="Implemented function objects and function calls in Interpreter." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented function objects and function calls in Interpreter." />
+    <MESSAGE value="Added null keyword to language." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added null keyword to language." />
   </component>
 </project>

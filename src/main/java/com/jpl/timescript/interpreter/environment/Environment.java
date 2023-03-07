@@ -12,15 +12,46 @@ public final class Environment {
     public Environment() { }
     public Environment(Environment parent) { this.parent = parent; }
 
+    public Environment getParent() { return parent; }
+
+    public boolean containsKeyLocally(String key) { return variables.containsKey(key);}
     public boolean containsKey(String key) {
-        return variables.containsKey(key);
+        Environment current = this;
+        while (current != null) {
+            if (containsKeyLocally(key)) return true;
+            current = current.parent;
+        }
+        return false;
     }
 
-    public TSObject get(String key) {
+    public TSObject getLocally(String key) {
         return variables.get(key);
     }
 
-    public void set(String key, TSObject value) {
+    public TSObject get(String key) {
+        Environment current = this;
+        while (current != null) {
+            if (containsKeyLocally(key)) {
+                return current.getLocally(key);
+            }
+            current = current.parent;
+        }
+        System.out.println("'" + key + "' has not been declared");
+        return variables.get(key);
+    }
+
+    public void setLocally(String key, TSObject value) {
         variables.put(key, value);
+    }
+    public void set(String key, TSObject value) {
+        Environment current = this;
+        while (current != null) {
+            if (containsKeyLocally(key)) {
+                current.setLocally(key, value);
+                return;
+            }
+            current = current.parent;
+        }
+        System.out.println("'" + key + "' has not been declared");
     }
 }
