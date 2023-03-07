@@ -13,7 +13,8 @@ public final class Lexer {
             "var",
             "if", "else",
             "while", "break", "continue",
-            "function", "return"
+            "function", "return",
+            "class"
     ));
 
     private static final PatternNode[] patterns = {

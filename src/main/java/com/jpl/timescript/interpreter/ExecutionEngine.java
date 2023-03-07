@@ -5,7 +5,6 @@ import com.jpl.timescript.interpreter.environment.Environment;
 import com.jpl.timescript.parser.AstNode;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
@@ -55,7 +54,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
     @Override
     public TSObject visitVariableDeclaration(AstNode.VariableDeclaration node) {
-        environment.set(node.name, node.expression.visit(this));
+        environment.setLocally(node.name, node.expression.visit(this));
         return null;
     }
 
@@ -152,6 +151,25 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     public TSObject visitReturnStatement(AstNode.ReturnStatement node) {
         shouldReturn = true;
         returnValue = node.expression.visit(this);
+        return null;
+    }
+
+    @Override
+    public TSObject visitClass(AstNode.Class node) {
+        if (environment.containsKey(node.className)) {
+            System.out.println("Cannot create class. Identifier already exists.");
+            return null;
+        }
+
+        Environment classEnvironment = new Environment(environment);
+        environment = classEnvironment;
+        for (AstNode declaration: node.statements) {
+            declaration.visit(this);
+        }
+        environment = classEnvironment.getParent();
+
+        TSClass classDefinition = new TSClass(node.className, classEnvironment);
+        environment.setLocally(node.className, classDefinition);
         return null;
     }
 }

@@ -25,6 +25,7 @@ public abstract class AstNode {
         T visitFunction(Function node);
         T visitFunctionCall(FunctionCall node);
         T visitReturnStatement(ReturnStatement node);
+        T visitClass(Class node);
     }
 
 
@@ -223,6 +224,20 @@ public abstract class AstNode {
         @Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitReturnStatement(this);
+        }
+    }
+
+    public static class Class extends AstNode {
+        public java.lang.String className;
+        public List<AstNode> statements;
+        public Class(Token className, List<AstNode> statements) {
+            this.className = className.value;
+            this.statements = statements;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitClass(this);
         }
     }
 }

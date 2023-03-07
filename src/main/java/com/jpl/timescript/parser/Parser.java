@@ -126,6 +126,8 @@ public final class Parser {
             return continueStatement();
         } else if (matchKeyword("return")) {
             return returnStatement();
+        } else if (matchKeyword("class")) {
+            return classDeclaration();
         }
         return expression();
     }
@@ -246,6 +248,20 @@ public final class Parser {
         advance();
         AstNode expression = expression();
         return new AstNode.ReturnStatement(expression);
+    }
+
+    private static AstNode classDeclaration() {
+        Token name = null;
+        List<AstNode> statements = null;
+        advance();
+        if (!expect(TokenType.ID, "Expected class identifier")) return null;
+        name = advance();
+        if (!expect(TokenType.LBRACE, "Expected '{'")) return null;
+        advance();
+        statements = statements();
+        if (!expect(TokenType.RBRACE, "Expected '}'")) return null;
+        advance();
+        return new AstNode.Class(name, statements);
     }
 
 
