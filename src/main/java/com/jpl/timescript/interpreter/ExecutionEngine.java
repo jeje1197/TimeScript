@@ -1,12 +1,10 @@
 package com.jpl.timescript.interpreter;
 
-import com.jpl.timescript.interpreter.datatypes.TSBoolean;
-import com.jpl.timescript.interpreter.datatypes.TSNumber;
-import com.jpl.timescript.interpreter.datatypes.TSObject;
-import com.jpl.timescript.interpreter.datatypes.TSString;
+import com.jpl.timescript.interpreter.datatypes.*;
 import com.jpl.timescript.interpreter.environment.Environment;
 import com.jpl.timescript.parser.AstNode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
@@ -15,6 +13,27 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     private boolean shouldContinue = false;
     public ExecutionEngine(Environment environment) {
         this.environment = environment;
+        addVariables();
+    }
+
+    private void addVariables() {
+        environment.set("print", new TSFunction() {
+            @Override
+            public int arity() {
+                return 1;
+            }
+
+            @Override
+            public TSObject call(ExecutionEngine engine) {
+                System.out.println("Print function called");
+                return null;
+            }
+
+            @Override
+            public String toString() {
+                return "<native fn>";
+            }
+        });
     }
 
     public TSObject visit(List<AstNode> statements) {
@@ -97,5 +116,32 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     public TSObject visitContinueStatement(AstNode.ContinueStatement node) {
         shouldContinue = true;
         return null;
+    }
+
+    @Override
+    public TSObject visitFunction(AstNode.Function node) {
+        return new TSFunction(node.arguments, node.statements);
+    }
+
+    @Override
+    public TSObject visitFunctionCall(AstNode.FunctionCall node) {
+        TSObject callee = node.callee.visit(this);
+
+        List<TSObject> arguments = new ArrayList<>();
+        for (AstNode argument: node.arguments) {
+            arguments.add(argument.visit(this));
+        }
+
+        if (!(callee instanceof TSCallable)) {
+            return null;
+        }
+
+        TSCallable function = (TSCallable) callee;
+        if (arguments.size() != function.arity()) {
+            System.out.println("Expected " + function.arity() + " arguments, but" +
+                    " received " + arguments.size());
+            return null;
+        }
+        return function.call(this);
     }
 }

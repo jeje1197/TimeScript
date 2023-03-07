@@ -3,6 +3,8 @@ package com.jpl.timescript.parser;
 import com.jpl.timescript.interpreter.ExecutionEngine;
 import com.jpl.timescript.lexer.Token;
 
+import java.util.List;
+
 public abstract class AstNode {
     public abstract <T> T visit(Visitor<T> visitor);
 
@@ -19,6 +21,8 @@ public abstract class AstNode {
         T visitWhileLoop(WhileLoop node);
         T visitBreakStatement(BreakStatement node);
         T visitContinueStatement(ContinueStatement node);
+        T visitFunction(Function node);
+        T visitFunctionCall(FunctionCall node);
     }
 
 
@@ -167,6 +171,36 @@ public abstract class AstNode {
         @Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitContinueStatement(this);
+        }
+    }
+
+    public static class Function extends AstNode {
+        public List<java.lang.String> arguments;
+        public List<AstNode> statements;
+
+        public Function(List<java.lang.String> arguments, List<AstNode> statements) {
+            this.arguments = arguments;
+            this.statements = statements;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitFunction(this);
+        }
+    }
+
+    public static class FunctionCall extends AstNode {
+        public AstNode callee;
+        public List<AstNode> arguments;
+
+        public FunctionCall(AstNode callee, List<AstNode> arguments) {
+            this.callee = callee;
+            this.arguments = arguments;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitFunctionCall(this);
         }
     }
 }

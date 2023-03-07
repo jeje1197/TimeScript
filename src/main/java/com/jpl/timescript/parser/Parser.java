@@ -194,6 +194,51 @@ public final class Parser {
         return new AstNode.ContinueStatement();
     }
 
+    private static AstNode functionDeclaration() {
+        List<String> arguments = new ArrayList<>();
+        List<AstNode> statements = new ArrayList<>();
+        advance();
+        if (!expect(TokenType.LPAREN, "Expected '('")) return null;
+        advance();
+        if (match(TokenType.ID)) {
+            arguments.add(advance().value);
+
+            while(match(TokenType.COMMA)) {
+                advance();
+                if (!expect(TokenType.ID,"Expected parameter")) return null;
+                arguments.add(advance().value);
+            }
+        }
+
+        if (!expect(TokenType.RPAREN, "Expected ')'")) return null;
+        advance();
+        if (!expect(TokenType.LBRACE, "Expected '{'")) return null;
+        statements = statements();
+        if (!expect(TokenType.RBRACE, "Expected '}'")) return null;
+        advance();
+        return new AstNode.Function(arguments, statements);
+    }
+
+    private static AstNode functionCall(AstNode callee) {
+        List<AstNode> arguments = new ArrayList<>();
+        advance();
+
+        AstNode expression = expression();
+        if (expression != null) {
+            arguments.add(expression);
+
+            while (match(TokenType.COMMA)) {
+                advance();
+                expression = expectExpression();
+                if (expression == null) return null;
+            }
+        }
+
+        if (!expect(TokenType.RPAREN, "Expected ')'")) return null;
+        advance();
+        return new AstNode.FunctionCall(callee, arguments);
+    }
+
 
     private static AstNode expression() {
         return binaryOperation("comparison1", Arrays.asList("&&", "||"), "comparison1");
@@ -212,7 +257,19 @@ public final class Parser {
     }
 
     private static AstNode factor() {
-        return binaryOperation("atom", Arrays.asList("*", "/", "%"), "atom");
+        return binaryOperation("modifier", Arrays.asList("*", "/", "%"), "modifier");
+    }
+
+    private static AstNode modifier() {
+        AstNode atom = atom();
+
+        while (match(TokenType.LPAREN) ) {
+            if (match(TokenType.LPAREN)) {
+                atom = functionCall(atom);
+                continue;
+            }
+        }
+        return atom;
     }
 
     private static AstNode atom() {
@@ -236,16 +293,12 @@ public final class Parser {
                 advance(); // skip )
                 return expression;
             }
-//            case LBRACKET:
-//                advance();
-//                return listExpression();
-//            case LBRACE:
-//                advance();
-//                return dictExpression();
             case KEYWORD:
                 if (match("true") || match("false")) {
                     advance();
                     return new AstNode.Boolean(token);
+                } else if (match("function")) {
+                    return functionDeclaration();
                 }
                 break;
             case OP:
@@ -288,7 +341,7 @@ public final class Parser {
             case "factor":
                 return factor();
             case "modifier":
-//                return modifier();
+                return modifier();
             case "atom":
                 return atom();
             default:

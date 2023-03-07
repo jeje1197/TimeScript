@@ -66,7 +66,6 @@ public final class TimeScript {
         if (hadError) return;
 
         List<AstNode> statements = Parser.parse(tokens);
-//        System.out.println("Program nodes:" + node);
 
         if (hadError) return;
         TSObject result = engine.visit(statements);
