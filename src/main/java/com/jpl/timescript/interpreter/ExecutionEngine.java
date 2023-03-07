@@ -90,6 +90,8 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
             } else if (shouldContinue) {
                 shouldContinue = false;
                 break;
+            } else if (shouldReturn) {
+                break;
             }
         }
         return returnValue;
@@ -139,11 +141,11 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         }
 
         environment = functionEnvironment;
-        function.call(this, functionEnvironment);
+        TSObject immediateValue = function.call(this, functionEnvironment);
         environment = functionEnvironment.getParent();
 
         shouldReturn = false;
-        return returnValue;
+        return function.isNative ? immediateValue : returnValue;
     }
 
     @Override

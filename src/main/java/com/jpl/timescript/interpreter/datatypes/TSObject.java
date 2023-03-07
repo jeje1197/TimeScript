@@ -19,6 +19,7 @@ public class TSObject {
         this.header = new ObjectHeader(className);
     }
 
+    public String getType() { return header.className; }
     public boolean isTruthy() { return true; }
 
     @Override

@@ -75,9 +75,4 @@ public final class TimeScript {
         System.out.println(message + ", line " + line);
         hadError = true;
     }
-
-//    public static void runtimeError(String message, int line) throws Exception {
-//        hadRuntimeError = true;
-//        throw new Exception(message + ", line " + line);
-//    }
 }

@@ -9,10 +9,12 @@ import java.util.List;
 public class TSFunction extends TSObject implements TSCallable {
     public List<String> argumentNames;
     public List<AstNode> statements;
+    public boolean isNative;
 
     public TSFunction(List<String> argumentNames) {
         super("Function");
         this.argumentNames = argumentNames;
+        this.isNative = true;
     }
 
     public TSFunction(List<String> argumentNames, List<AstNode> statements) {
