@@ -4,6 +4,7 @@ import com.jpl.timescript.TimeScript;
 import com.jpl.timescript.lexer.Token;
 import com.jpl.timescript.lexer.TokenType;
 
+import java.sql.Time;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,8 +32,31 @@ public final class Parser {
         return peek().type == type;
     }
 
+    private static boolean match(String value) {
+        return peek().value.equals(value);
+    }
+
     private static boolean matchKeyword(String keyword) {
-        return peek().type == TokenType.KEYWORD && peek().value == keyword;
+        return peek().type == TokenType.KEYWORD && peek().value.equals(keyword);
+    }
+
+    private static boolean matchOp(String operator) {
+        return peek().type == TokenType.KEYWORD && peek().value.equals(operator);
+    }
+
+    private static boolean expect(TokenType type, String message) {
+        if (peek().type != type) {
+            TimeScript.error(message, peek().line);
+        }
+        return true;
+    }
+
+    private static AstNode expectExpression() {
+        AstNode expression = expression();
+        if (expression == null) {
+            TimeScript.error("Expected expression", peek().line);
+        }
+        return expression;
     }
 
     public static AstNode parse(List<Token> tokens) {
@@ -76,43 +100,41 @@ public final class Parser {
             case STRING:
                 advance();
                 return new AstNode.String(token);
-//            case IDENTIFIER:
-//                advance();
-//                return new Expr.VarAccessNode(token);
-//            case LPAREN: {
-//                advance();
-//                Expr expr = expectExpression();
-//                if (expr == null) return null;
-//                if (!expect(TokenType.RPAREN, "Expected )")) return null;
-//                advance(); // skip )
-//
-//                return expr;
-//            }
+            case ID:
+                advance();
+                return new AstNode.VariableAccess(token);
+            case LPAREN: {
+                advance();
+                AstNode expression = expectExpression();
+                if (expression == null) return null;
+                if (!expect(TokenType.RPAREN, "Expected )")) return null;
+                advance(); // skip )
+                return expression;
+            }
 //            case LBRACKET:
 //                advance();
 //                return listExpression();
 //            case LBRACE:
 //                advance();
 //                return dictExpression();
-//            case NOT:
-//            case MINUS:
-//            case PLUS: {
-//                advance();
-//                Expr expr = expectExpression();
-//                if (expr == null) return null;
-//                return new Expr.UnaryOpNode(token, expr);
-//            }
-
+            case OP:
+                if (match("+") || match("-") || match("!")) {
+                    advance();
+                    AstNode expression = expectExpression();
+                    if (expression == null) return null;
+                    return new AstNode.UnaryOp(token, expression);
+                }
+                break;
             default:
                 return null;
         }
+        return null;
     }
 
     private static AstNode binaryOperation(String function1,
                                  List<String> operators, String function2) {
         AstNode left = accessFunction(function1);
-        System.out.println(peek());
-        while (peek().type == TokenType.OP && operators.contains(peek().value)) {
+        while (left != null && match(TokenType.OP) && operators.contains(peek().value)) {
             Token operator = advance();
             AstNode right = accessFunction(function2);
             if (right == null) {

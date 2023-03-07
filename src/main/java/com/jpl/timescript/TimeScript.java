@@ -67,7 +67,6 @@ public final class TimeScript {
 
         AstNode node = Parser.parse(tokens);
         System.out.println("Program nodes:" + node);
-        System.out.println(node.getClass().getSimpleName());
 
     }
 

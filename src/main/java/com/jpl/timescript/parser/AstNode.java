@@ -42,4 +42,11 @@ public abstract class AstNode {
             this.right = right;
         }
     }
+
+    static class VariableAccess extends AstNode {
+        public java.lang.String name;
+        public VariableAccess (Token token) {
+            this.name = token.value;
+        }
+    }
 }

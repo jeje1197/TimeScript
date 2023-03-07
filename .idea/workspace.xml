@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Updated Token class to fit single responsibility principle. Lexer adjusted to capture keywords and identifiers correctly. Replaced exception throwing in Lexer with static error messaging.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Updated regex in Lexer">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,11 +65,19 @@
       <option name="project" value="LOCAL" />
       <updated>1678151465854</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Updated regex in Lexer">
+      <created>1678167564867</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1678167564867</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Updated Token class to fit single responsibility principle. Lexer adjusted to capture keywords and identifiers correctly. Replaced exception throwing in Lexer with static error messaging." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Token class to fit single responsibility principle. Lexer adjusted to capture keywords and identifiers correctly. Replaced exception throwing in Lexer with static error messaging." />
+    <MESSAGE value="Updated regex in Lexer" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated regex in Lexer" />
   </component>
 </project>
