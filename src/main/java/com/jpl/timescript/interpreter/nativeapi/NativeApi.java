@@ -39,18 +39,18 @@ public final class NativeApi {
         // Type Method
         globalEnvironment.setLocally("type", new TSFunction(Arrays.asList("object")) {
             @Override
-            public int arity() {
-                return 1;
-            }
-
-            @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 return new TSString(environment.get("object").getType());
             }
+        });
 
+        // Exit Method
+        globalEnvironment.setLocally("exit", new TSFunction(Arrays.asList()) {
             @Override
-            public String toString() {
-                return "<native fn>";
+            public TSObject call(ExecutionEngine engine, Environment environment) {
+                // Indicate an invoked program termination
+                System.exit(71);
+                return null;
             }
         });
     }

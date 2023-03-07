@@ -32,4 +32,9 @@ public class TSFunction extends TSObject implements TSCallable {
     public TSObject call(ExecutionEngine engine, Environment environment) {
         return engine.visit(statements);
     }
+
+    @Override
+    public String toString() {
+        return isNative ? "<native fn>" : super.toString();
+    }
 }
