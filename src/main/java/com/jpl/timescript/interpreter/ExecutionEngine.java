@@ -183,4 +183,16 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         environment.setLocally(node.className, classDefinition);
         return null;
     }
+
+    @Override
+    public TSObject visitAttributeAccess(AstNode.AttributeAccess node) {
+        TSObject structure = node.structure.visit(this);
+        if (!(structure instanceof TSClass)) {
+            System.out.println("Does not have attributes");
+            return null;
+        }
+
+        TSClass classDefinition = (TSClass) structure;
+        return classDefinition.getField(node.name);
+    }
 }

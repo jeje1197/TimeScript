@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Adding class definition to interpreter.">
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Added block statement to Parser and Interpreter.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
     </list>
@@ -44,10 +48,33 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Java_Workspace/CeroVNEngine",
+    "last_opened_file_path": "C:/Java_Workspace/TimeScript",
     "settings.editor.selected.configurable": "editor.preferences.appearance"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="TimeScript" type="Application" factoryName="Application" temporary="true">
+      <option name="MAIN_CLASS_NAME" value="com.jpl.timescript.TimeScript" />
+      <module name="TimeScript.main" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.jpl.timescript.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.jpl.timescript.TimeScript" />
+      <module name="TimeScript.main" />
+      <option name="PROGRAM_PARAMETERS" value="test.txt" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -155,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678222977053</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Added block statement to Parser and Interpreter.">
+      <created>1678224507596</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1678224507596</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -172,6 +206,7 @@
     <MESSAGE value="Updated visitFunctionCall method to return values of native methods." />
     <MESSAGE value="Added flag for native function to TSFunction." />
     <MESSAGE value="Adding class definition to interpreter." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding class definition to interpreter." />
+    <MESSAGE value="Added block statement to Parser and Interpreter." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added block statement to Parser and Interpreter." />
   </component>
 </project>

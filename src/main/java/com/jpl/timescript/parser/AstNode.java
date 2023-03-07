@@ -2,6 +2,7 @@ package com.jpl.timescript.parser;
 
 import com.jpl.timescript.interpreter.ExecutionEngine;
 import com.jpl.timescript.lexer.Token;
+import org.w3c.dom.Attr;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public abstract class AstNode {
         T visitFunctionCall(FunctionCall node);
         T visitReturnStatement(ReturnStatement node);
         T visitClass(Class node);
+        T visitAttributeAccess(AttributeAccess node);
     }
 
 
@@ -252,6 +254,20 @@ public abstract class AstNode {
         @Override
         public <T> T visit(Visitor<T> visitor) {
             return visitor.visitClass(this);
+        }
+    }
+
+    public static class AttributeAccess extends AstNode {
+        public AstNode structure;
+        public java.lang.String name;
+        public AttributeAccess(AstNode structure, Token name) {
+            this.structure = structure;
+            this.name = name.value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitAttributeAccess(this);
         }
     }
 }

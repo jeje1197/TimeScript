@@ -57,11 +57,11 @@ public final class TimeScript {
         run(new String(bytes, Charset.defaultCharset()));
         // Indicate an error in the exit code.
         if (hadError) System.exit(65);
-        if (hadRuntimeError) System.exit(70);
     }
 
     public static void run(String code) {
         List<Token> tokens = Lexer.getTokens(code);
+        tokens.forEach((token) -> System.out.println(token));
         if (hadError) return;
 
         List<AstNode> statements = Parser.parse(tokens);

@@ -18,7 +18,7 @@ public final class Lexer {
     ));
 
     private static final PatternNode[] patterns = {
-            new PatternNode(TokenType.DISCARD, "^(\s|\t|\n)"), // whitespace
+            new PatternNode(TokenType.DISCARD, "^(\s|\t|\n)+"), // whitespace
             new PatternNode(TokenType.DISCARD, "^(#.*\n?)"), // comments
 
             new PatternNode(TokenType.NUMBER, "^(\\d+(\\.\\d+|\\.\\d+)?)"),
@@ -72,7 +72,7 @@ public final class Lexer {
             }
 
             if (!patternFound) {
-                TimeScript.error("No token found", currentLine);
+                TimeScript.error("No token found: " + text.charAt(0), currentLine);
                 text = text.substring(1);
             }
         }

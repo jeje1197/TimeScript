@@ -143,7 +143,7 @@ public final class Parser {
     }
 
     private static AstNode variableDeclaration() {
-        Token name = null;
+        Token name;
         AstNode expression = null;
         advance();
         if (!expect(TokenType.ID, "Expected identifier")) return null;
@@ -164,8 +164,8 @@ public final class Parser {
     }
 
     private static AstNode ifStatement() {
-        AstNode conditionExpression = null;
-        AstNode ifStatement = null;
+        AstNode conditionExpression;
+        AstNode ifStatement;
         AstNode elseStatement = null;
         advance();
         if (!expect(TokenType.LPAREN, "Expected '('")) return null;
@@ -274,6 +274,14 @@ public final class Parser {
         return new AstNode.Class(name, statements);
     }
 
+    private static AstNode attributeAccess(AstNode atom) {
+        Token name;
+        advance();
+        if (!expect(TokenType.ID, "Expected attibute name")) return null;
+        name = advance();
+        return new AstNode.AttributeAccess(atom, name);
+    }
+
 
     private static AstNode expression() {
         return binaryOperation("comparison1", Arrays.asList("&&", "||"), "comparison1");
@@ -298,10 +306,13 @@ public final class Parser {
     private static AstNode modifier() {
         AstNode atom = atom();
 
-        while (match(TokenType.LPAREN) ) {
+        while (atom != null && (match(TokenType.LPAREN) || match(TokenType.DOT))) {
             if (match(TokenType.LPAREN)) {
                 atom = functionCall(atom);
-                continue;
+            } else if (match(TokenType.DOT)) {
+                atom = attributeAccess(atom);
+            } else {
+                return atom();
             }
         }
         return atom;
