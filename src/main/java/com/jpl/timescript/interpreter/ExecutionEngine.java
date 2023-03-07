@@ -17,27 +17,6 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
     public ExecutionEngine(Environment environment) {
         this.environment = environment;
-        addVariables();
-    }
-
-    private void addVariables() {
-        environment.setLocally("println", new TSFunction(Arrays.asList("text")) {
-            @Override
-            public int arity() {
-                return 1;
-            }
-
-            @Override
-            public TSObject call(ExecutionEngine engine) {
-                System.out.println(environment.get("text"));
-                return null;
-            }
-
-            @Override
-            public String toString() {
-                return "<native fn>";
-            }
-        });
     }
 
     public TSObject visit(List<AstNode> statements) {
@@ -160,7 +139,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         }
 
         environment = functionEnvironment;
-        function.call(this);
+        function.call(this, functionEnvironment);
         environment = functionEnvironment.getParent();
 
         shouldReturn = false;

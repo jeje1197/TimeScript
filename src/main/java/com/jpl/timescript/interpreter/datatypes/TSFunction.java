@@ -27,7 +27,7 @@ public class TSFunction extends TSObject implements TSCallable {
     }
 
     @Override
-    public TSObject call(ExecutionEngine engine) {
+    public TSObject call(ExecutionEngine engine, Environment environment) {
         return engine.visit(statements);
     }
 }
