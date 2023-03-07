@@ -1,12 +1,32 @@
 package com.jpl.timescript.parser;
 
+import com.jpl.timescript.interpreter.ExecutionEngine;
 import com.jpl.timescript.lexer.Token;
 
 public abstract class AstNode {
+    public abstract <T> T visit(Visitor<T> visitor);
+
+    public interface Visitor<T> {
+        T visitNumber(Number node);
+        T visitString(String node);
+        T visitBoolean(Boolean node);
+        T visitUnaryOp(UnaryOp node);
+        T visitBinaryOp(BinaryOp node);
+        T visitVariableDeclaration(VariableDeclaration node);
+        T visitVariableAssignment(VariableAssignment node);
+        T visitVariableAccess(VariableAccess node);
+    }
+
+
     public static class Number extends AstNode {
         public double value;
         public Number(Token token) {
             this.value = Double.parseDouble(token.value);
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitNumber(this);
         }
     }
 
@@ -15,6 +35,11 @@ public abstract class AstNode {
         public String(Token token) {
             this.value = token.value;
         }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitString(this);
+        }
     }
 
     public static class Boolean extends AstNode {
@@ -22,18 +47,28 @@ public abstract class AstNode {
         public Boolean(Token token) {
             this.value = java.lang.Boolean.parseBoolean(token.value);
         }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitBoolean(this);
+        }
     }
 
-    static class UnaryOp extends AstNode {
+    public static class UnaryOp extends AstNode {
         public Token op;
         public AstNode expression;
         public UnaryOp(Token operator, AstNode expression) {
             this.op = operator;
             this.expression = expression;
         }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitUnaryOp(this);
+        }
     }
 
-    static class BinaryOp extends AstNode {
+    public static class BinaryOp extends AstNode {
         public Token op;
         public AstNode left, right;
         public BinaryOp(Token operator, AstNode left, AstNode right) {
@@ -41,12 +76,50 @@ public abstract class AstNode {
             this.left = left;
             this.right = right;
         }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitBinaryOp(this);
+        }
     }
 
-    static class VariableAccess extends AstNode {
+    public static class VariableDeclaration extends AstNode {
+        public java.lang.String name;
+        public AstNode expression;
+        public VariableDeclaration(Token name, AstNode expression) {
+            this.name = name.value;
+            this.expression = expression;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitVariableDeclaration(this);
+        }
+    }
+
+    public static class VariableAssignment extends AstNode {
+        public java.lang.String name;
+        public AstNode expression;
+        public VariableAssignment(Token name, AstNode expression) {
+            this.name = name.value;
+            this.expression = expression;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitVariableAssignment(this);
+        }
+    }
+
+    public static class VariableAccess extends AstNode {
         public java.lang.String name;
         public VariableAccess (Token token) {
             this.name = token.value;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitVariableAccess(this);
         }
     }
 }

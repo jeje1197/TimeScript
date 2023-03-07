@@ -1,5 +1,7 @@
 package com.jpl.timescript;
 
+import com.jpl.timescript.interpreter.ExecutionEngine;
+import com.jpl.timescript.interpreter.datatypes.TSObject;
 import com.jpl.timescript.lexer.Lexer;
 import com.jpl.timescript.lexer.Token;
 import com.jpl.timescript.parser.AstNode;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public final class TimeScript {
 //    private static Environment globalEnvironment = new Environment();
-//    private static ExecutionEngine engine = new ExecutionEngine();
+    private static ExecutionEngine engine = new ExecutionEngine();
     private static boolean hadError = false;
     private static boolean hadRuntimeError = false;
 
@@ -66,8 +68,10 @@ public final class TimeScript {
         }
 
         AstNode node = Parser.parse(tokens);
-        System.out.println("Program nodes:" + node);
+//        System.out.println("Program nodes:" + node);
 
+        TSObject result = node.visit(engine);
+        System.out.println(result);
     }
 
     public static void error(String message, int line) {

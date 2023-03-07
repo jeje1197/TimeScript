@@ -16,7 +16,7 @@ public class TSObject {
     ObjectHeader header;
 
     public TSObject(String className) {
-        this.header.className = className;
+        this.header = new ObjectHeader(className);
     }
 
     @Override

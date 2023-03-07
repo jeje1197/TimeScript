@@ -99,9 +99,9 @@ public final class Parser {
             case STRING:
                 advance();
                 return new AstNode.String(token);
-            case ID:
-                advance();
-                return new AstNode.VariableAccess(token);
+//            case ID:
+//                advance();
+////                return new AstNode.VariableAccess(token);
             case LPAREN: {
                 advance();
                 AstNode expression = expectExpression();
