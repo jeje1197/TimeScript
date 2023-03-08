@@ -144,18 +144,16 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
             arguments.add(argument.visit(this));
         }
 
-        TSFunction function = null;
         if (callee instanceof TSClass) {
-//            TSClass classDefinition = (TSClass) callee;
-//            TSInstance instance = classDefinition.
-//            function = (TSFunction) classDefinition.getField("constructor");
+            TSClass classDefinition = (TSClass) callee;
+            return visitConstructor(classDefinition);
+
         } else if (!(callee instanceof TSFunction)) {
             System.out.println("Cannot be called");
             return null;
-        } else {
-            function = (TSFunction) callee;
         }
 
+        TSFunction function = (TSFunction) callee;
         if (arguments.size() != function.arity()) {
             TimeScript.runtimeError("Expected " + function.arity() + " arguments, but" +
                     " received " + arguments.size());
@@ -172,6 +170,11 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
         shouldReturn = false;
         return function.isNative ? immediateValue : returnValue;
+    }
+
+    public TSObject visitConstructor(TSClass classDefinition) throws Exception {
+        TSInstance instance = new TSInstance(classDefinition, new Environment());
+        return instance;
     }
 
     @Override

@@ -10,6 +10,10 @@ public class TSInstance extends TSObject implements TSStructure {
         super(classDeclaration.className);
         this.classDeclaration = classDeclaration;
         this.environment = environment;
+
+        classDeclaration.environment.getVariables().entrySet().forEach((entry) -> {
+            environment.setLocally(entry.getKey(), entry.getValue());
+        });
     }
 
     @Override
@@ -24,6 +28,6 @@ public class TSInstance extends TSObject implements TSStructure {
 
     @Override
     public String toString() {
-        return "<"+ classDeclaration + ">";
+        return "<"+ classDeclaration.className + ">";
     }
 }

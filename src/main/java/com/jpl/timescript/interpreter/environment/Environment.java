@@ -12,6 +12,7 @@ public final class Environment {
     public Environment() { }
     public Environment(Environment parent) { this.parent = parent; }
 
+    public Map<String, TSObject> getVariables() { return variables; }
     public Environment getParent() { return parent; }
 
     public boolean containsKeyLocally(String key) { return variables.containsKey(key);}
