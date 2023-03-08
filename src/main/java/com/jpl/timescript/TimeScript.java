@@ -61,18 +61,27 @@ public final class TimeScript {
 
     public static void run(String code) {
         List<Token> tokens = Lexer.getTokens(code);
-        tokens.forEach((token) -> System.out.println(token));
+//        tokens.forEach((token) -> System.out.println(token));
         if (hadError) return;
 
         List<AstNode> statements = Parser.parse(tokens);
         if (hadError) return;
 
-        TSObject result = engine.visit(statements);
+        TSObject result = null;
+        try {
+            result = engine.visit(statements);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
         System.out.println(result);
     }
 
     public static void error(String message, int line) {
         System.out.println(message + ", line " + line);
         hadError = true;
+    }
+
+    public static void runtimeError(String message) throws Exception {
+        throw new Exception(message);
     }
 }

@@ -7,7 +7,7 @@ import org.w3c.dom.Attr;
 import java.util.List;
 
 public abstract class AstNode {
-    public abstract <T> T visit(Visitor<T> visitor);
+    public abstract <T> T visit(Visitor<T> visitor) throws Exception;
 
     public interface Visitor<T> {
         T visitNumber(Number node);
@@ -16,19 +16,19 @@ public abstract class AstNode {
         T visitNull(Null node);
         T visitUnaryOp(UnaryOp node);
         T visitBinaryOp(BinaryOp node);
-        T visitBlockStatement(BlockStatement node);
-        T visitVariableDeclaration(VariableDeclaration node);
-        T visitVariableAssignment(VariableAssignment node);
-        T visitVariableAccess(VariableAccess node);
-        T visitIfStatement(IfStatement node);
-        T visitWhileLoop(WhileLoop node);
+        T visitBlockStatement(BlockStatement node) throws Exception;
+        T visitVariableDeclaration(VariableDeclaration node) throws Exception;
+        T visitVariableAssignment(VariableAssignment node) throws Exception;
+        T visitVariableAccess(VariableAccess node) throws Exception;
+        T visitIfStatement(IfStatement node) throws Exception;
+        T visitWhileLoop(WhileLoop node) throws Exception;
         T visitBreakStatement(BreakStatement node);
         T visitContinueStatement(ContinueStatement node);
         T visitFunction(Function node);
-        T visitFunctionCall(FunctionCall node);
-        T visitReturnStatement(ReturnStatement node);
-        T visitClass(Class node);
-        T visitAttributeAccess(AttributeAccess node);
+        T visitFunctionCall(FunctionCall node) throws Exception;
+        T visitReturnStatement(ReturnStatement node) throws Exception;
+        T visitClass(Class node) throws Exception;
+        T visitAttributeAccess(AttributeAccess node) throws Exception;
     }
 
 
@@ -112,7 +112,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitBlockStatement(this);
         }
     }
@@ -126,7 +126,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitVariableDeclaration(this);
         }
     }
@@ -140,7 +140,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitVariableAssignment(this);
         }
     }
@@ -152,7 +152,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitVariableAccess(this);
         }
     }
@@ -167,7 +167,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitIfStatement(this);
         }
     }
@@ -181,7 +181,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitWhileLoop(this);
         }
     }
@@ -225,7 +225,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitFunctionCall(this);
         }
     }
@@ -238,7 +238,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitReturnStatement(this);
         }
     }
@@ -252,7 +252,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitClass(this);
         }
     }
@@ -266,7 +266,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitAttributeAccess(this);
         }
     }

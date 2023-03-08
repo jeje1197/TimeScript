@@ -5,5 +5,5 @@ import com.jpl.timescript.interpreter.environment.Environment;
 
 public interface TSCallable {
     int arity();
-    TSObject call(ExecutionEngine engine, Environment environment);
+    TSObject call(ExecutionEngine engine, Environment environment) throws Exception;
 }

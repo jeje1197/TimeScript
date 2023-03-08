@@ -1,5 +1,6 @@
 package com.jpl.timescript.interpreter;
 
+import com.jpl.timescript.TimeScript;
 import com.jpl.timescript.interpreter.datatypes.*;
 import com.jpl.timescript.interpreter.environment.Environment;
 import com.jpl.timescript.parser.AstNode;
@@ -9,6 +10,7 @@ import java.util.List;
 
 public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     private Environment environment;
+    private static final TSNull nullObject = new TSNull();
     private boolean shouldBreak = false;
     private boolean shouldContinue = false;
     private boolean shouldReturn = false;
@@ -18,7 +20,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         this.environment = environment;
     }
 
-    public TSObject visit(List<AstNode> statements) {
+    public TSObject visit(List<AstNode> statements) throws Exception {
         TSObject returnValue = null;
         for (AstNode node: statements) {
             returnValue = node.visit(this);
@@ -41,19 +43,19 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     public TSObject visitNull(AstNode.Null node) {
-        return new TSNull();
+        return nullObject;
     }
 
     public TSObject visitUnaryOp(AstNode.UnaryOp node) {
-        return null;
+        return nullObject;
     }
 
     public TSObject visitBinaryOp(AstNode.BinaryOp node) {
-        return null;
+        return nullObject;
     }
 
     @Override
-    public TSObject visitBlockStatement(AstNode.BlockStatement node) {
+    public TSObject visitBlockStatement(AstNode.BlockStatement node) throws Exception {
         TSObject returnValue = null;
         for (AstNode statement: node.statements) {
             returnValue = statement.visit(this);
@@ -64,24 +66,33 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     @Override
-    public TSObject visitVariableDeclaration(AstNode.VariableDeclaration node) {
+    public TSObject visitVariableDeclaration(AstNode.VariableDeclaration node) throws Exception {
+        if (environment.containsKeyLocally(node.name)) {
+            TimeScript.runtimeError("'" + node.name + "' has already been declared");
+        }
         environment.setLocally(node.name, node.expression.visit(this));
         return null;
     }
 
     @Override
-    public TSObject visitVariableAssignment(AstNode.VariableAssignment node) {
+    public TSObject visitVariableAssignment(AstNode.VariableAssignment node) throws Exception {
+        if (!environment.containsKey(node.name)) {
+            TimeScript.runtimeError("'" + node.name + "' has not been declared.");
+        }
         environment.set(node.name, node.expression.visit(this));
         return null;
     }
 
     @Override
-    public TSObject visitVariableAccess(AstNode.VariableAccess node) {
+    public TSObject visitVariableAccess(AstNode.VariableAccess node) throws Exception {
+        if (!environment.containsKey(node.name)) {
+            TimeScript.runtimeError("'" + node.name + "' has not been declared.");
+        }
         return environment.get(node.name);
     }
 
     @Override
-    public TSObject visitIfStatement(AstNode.IfStatement node) {
+    public TSObject visitIfStatement(AstNode.IfStatement node) throws Exception {
         if (node.conditionExpression.visit(this).isTruthy()) {
             return node.ifStatement.visit(this);
         } else {
@@ -90,7 +101,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     @Override
-    public TSObject visitWhileLoop(AstNode.WhileLoop node) {
+    public TSObject visitWhileLoop(AstNode.WhileLoop node) throws Exception {
         TSObject returnValue = null;
         while(node.conditionExpression.visit(this).isTruthy()) {
             returnValue = node.statement.visit(this);
@@ -125,7 +136,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     @Override
-    public TSObject visitFunctionCall(AstNode.FunctionCall node) {
+    public TSObject visitFunctionCall(AstNode.FunctionCall node) throws Exception {
         TSObject callee = node.callee.visit(this);
 
         List<TSObject> arguments = new ArrayList<>();
@@ -133,16 +144,21 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
             arguments.add(argument.visit(this));
         }
 
-        if (!(callee instanceof TSFunction)) {
+        TSFunction function = null;
+        if (callee instanceof TSClass) {
+//            TSClass classDefinition = (TSClass) callee;
+//            TSInstance instance = classDefinition.
+//            function = (TSFunction) classDefinition.getField("constructor");
+        } else if (!(callee instanceof TSFunction)) {
             System.out.println("Cannot be called");
             return null;
+        } else {
+            function = (TSFunction) callee;
         }
 
-        TSFunction function = (TSFunction) callee;
         if (arguments.size() != function.arity()) {
-            System.out.println("Expected " + function.arity() + " arguments, but" +
+            TimeScript.runtimeError("Expected " + function.arity() + " arguments, but" +
                     " received " + arguments.size());
-            return null;
         }
 
         Environment functionEnvironment = new Environment(environment);
@@ -159,16 +175,16 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     @Override
-    public TSObject visitReturnStatement(AstNode.ReturnStatement node) {
+    public TSObject visitReturnStatement(AstNode.ReturnStatement node) throws Exception {
         shouldReturn = true;
         returnValue = node.expression.visit(this);
         return null;
     }
 
     @Override
-    public TSObject visitClass(AstNode.Class node) {
+    public TSObject visitClass(AstNode.Class node) throws Exception {
         if (environment.containsKey(node.className)) {
-            System.out.println("Cannot create class. Identifier already exists.");
+            TimeScript.runtimeError("Cannot create class. Identifier already exists.");
             return null;
         }
 
@@ -185,14 +201,17 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     @Override
-    public TSObject visitAttributeAccess(AstNode.AttributeAccess node) {
+    public TSObject visitAttributeAccess(AstNode.AttributeAccess node) throws Exception {
         TSObject structure = node.structure.visit(this);
         if (!(structure instanceof TSClass)) {
-            System.out.println("Does not have attributes");
+            TimeScript.runtimeError("Does not have attributes");
             return null;
         }
 
         TSClass classDefinition = (TSClass) structure;
+//        if (!classDefinition.environment.containsKeyLocally(node.name)) {
+//            TimeScript.runtimeError();
+//        }
         return classDefinition.getField(node.name);
     }
 }
