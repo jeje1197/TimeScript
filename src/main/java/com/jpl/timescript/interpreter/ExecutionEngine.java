@@ -14,7 +14,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     private boolean shouldBreak = false;
     private boolean shouldContinue = false;
     private boolean shouldReturn = false;
-    private TSObject returnValue = null;
+    private TSObject returnValue = nullObject;
 
     public ExecutionEngine(Environment environment) {
         this.environment = environment;
@@ -50,18 +50,56 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         return nullObject;
     }
 
-    public TSObject visitBinaryOp(AstNode.BinaryOp node) {
+    public TSObject visitBinaryOp(AstNode.BinaryOp node) throws Exception {
+        TSObject leftValue = node.left.visit(this);
+        TSObject rightValue = node.right.visit(this);
+
+        switch (node.op) {
+            case "+":
+                return leftValue.add(rightValue);
+            case "-":
+                return leftValue.subtract(rightValue);
+            case "*":
+                return leftValue.multiply(rightValue);
+            case "/":
+                return leftValue.divide(rightValue);
+            case "%":
+                return leftValue.mod(rightValue);
+
+            case "<":
+                return leftValue.lessThan(rightValue);
+            case "<=":
+                return leftValue.lessThanOrEquals(rightValue);
+            case ">":
+                return leftValue.greaterThan(rightValue);
+            case ">=":
+                return leftValue.greaterThanOrEquals(rightValue);
+            case "==":
+                return leftValue.equals(rightValue);
+            case "!=":
+                return leftValue.notEquals(rightValue);
+
+            case "&&":
+                return leftValue.and(rightValue);
+            case "||":
+                return leftValue.or(rightValue);
+            default:
+                TimeScript.runtimeError("Unimplemented binary operator");
+        }
         return nullObject;
     }
 
     @Override
     public TSObject visitBlockStatement(AstNode.BlockStatement node) throws Exception {
         TSObject returnValue = null;
+        Environment newEnvironment = new Environment(environment);
+        environment = newEnvironment;
         for (AstNode statement: node.statements) {
             returnValue = statement.visit(this);
             if (shouldBreak || shouldContinue) break;
             if (shouldReturn) break;
         }
+        environment = environment.getParent();
         return returnValue;
     }
 

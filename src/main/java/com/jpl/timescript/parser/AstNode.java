@@ -15,7 +15,7 @@ public abstract class AstNode {
         T visitBoolean(Boolean node);
         T visitNull(Null node);
         T visitUnaryOp(UnaryOp node);
-        T visitBinaryOp(BinaryOp node);
+        T visitBinaryOp(BinaryOp node) throws Exception;
         T visitBlockStatement(BlockStatement node) throws Exception;
         T visitVariableDeclaration(VariableDeclaration node) throws Exception;
         T visitVariableAssignment(VariableAssignment node) throws Exception;
@@ -77,10 +77,10 @@ public abstract class AstNode {
     }
 
     public static class UnaryOp extends AstNode {
-        public Token op;
+        public java.lang.String op;
         public AstNode expression;
         public UnaryOp(Token operator, AstNode expression) {
-            this.op = operator;
+            this.op = operator.value;
             this.expression = expression;
         }
 
@@ -91,16 +91,16 @@ public abstract class AstNode {
     }
 
     public static class BinaryOp extends AstNode {
-        public Token op;
+        public java.lang.String op;
         public AstNode left, right;
         public BinaryOp(Token operator, AstNode left, AstNode right) {
-            this.op = operator;
+            this.op = operator.value;
             this.left = left;
             this.right = right;
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitBinaryOp(this);
         }
     }
