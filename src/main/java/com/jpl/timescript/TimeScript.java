@@ -70,10 +70,10 @@ public final class TimeScript {
         TSObject result = null;
         try {
             result = engine.visit(statements);
+            System.out.println(result);
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.out.println("Runtime Exception: " + e.getMessage());
         }
-        System.out.println(result);
     }
 
     public static void error(String message, int line) {
@@ -82,6 +82,7 @@ public final class TimeScript {
     }
 
     public static void runtimeError(String message) throws Exception {
+        hadRuntimeError = true;
         throw new Exception(message);
     }
 }

@@ -2,7 +2,7 @@ package com.jpl.timescript.interpreter.datatypes;
 
 import com.jpl.timescript.interpreter.environment.Environment;
 
-public class TSClass extends TSObject {
+public class TSClass extends TSObject implements TSStructure{
     public String className;
     public Environment environment;
 
@@ -18,7 +18,7 @@ public class TSClass extends TSObject {
     }
 
     public void setField(String key, TSObject value) {
-        environment.setLocally(key, value);
+        environment.set(key, value);
     }
 
     @Override

@@ -29,6 +29,7 @@ public abstract class AstNode {
         T visitReturnStatement(ReturnStatement node) throws Exception;
         T visitClass(Class node) throws Exception;
         T visitAttributeAccess(AttributeAccess node) throws Exception;
+        T visitAttributeAssign(AttributeAssign node) throws Exception;
     }
 
 
@@ -268,6 +269,22 @@ public abstract class AstNode {
         @Override
         public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitAttributeAccess(this);
+        }
+    }
+
+    public static class AttributeAssign extends AstNode {
+        public AstNode structure, expression;
+        public java.lang.String name;
+
+        public AttributeAssign(AstNode structure, Token name, AstNode expression) {
+            this.structure = structure;
+            this.name = name.value;
+            this.expression = expression;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) throws Exception {
+            return visitor.visitAttributeAssign(this);
         }
     }
 }

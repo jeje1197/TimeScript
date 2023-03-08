@@ -276,10 +276,22 @@ public final class Parser {
 
     private static AstNode attributeAccess(AstNode atom) {
         Token name;
-        advance();
-        if (!expect(TokenType.ID, "Expected attibute name")) return null;
+        if (!expect(TokenType.ID, "Expected attribute name")) return null;
         name = advance();
         return new AstNode.AttributeAccess(atom, name);
+    }
+
+    private static AstNode attributeAssign(AstNode atom) {
+        Token name;
+        AstNode expression;
+        if (!expect(TokenType.ID, "Expected attribute name")) return null;
+        name = advance();
+        if (!expect(TokenType.OP, "=","Expected =")) return null;
+        advance();
+        expression = expectExpression();
+        if (expression == null) return null;
+
+        return new AstNode.AttributeAssign(atom, name, expression);
     }
 
 
@@ -310,9 +322,12 @@ public final class Parser {
             if (match(TokenType.LPAREN)) {
                 atom = functionCall(atom);
             } else if (match(TokenType.DOT)) {
-                atom = attributeAccess(atom);
-            } else {
-                return atom();
+                advance();
+                if (match(TokenType.ID) && matchNext(TokenType.OP, "=")) {
+                    atom = attributeAssign(atom);
+                } else {
+                    atom = attributeAccess(atom);
+                }
             }
         }
         return atom;

@@ -202,16 +202,26 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
     @Override
     public TSObject visitAttributeAccess(AstNode.AttributeAccess node) throws Exception {
-        TSObject structure = node.structure.visit(this);
-        if (!(structure instanceof TSClass)) {
+        TSObject object = node.structure.visit(this);
+        if (!(object instanceof TSStructure)) {
             TimeScript.runtimeError("Does not have attributes");
             return null;
         }
 
-        TSClass classDefinition = (TSClass) structure;
-//        if (!classDefinition.environment.containsKeyLocally(node.name)) {
-//            TimeScript.runtimeError();
-//        }
-        return classDefinition.getField(node.name);
+        TSStructure structure = (TSStructure) object;
+        return structure.getField(node.name);
+    }
+
+    @Override
+    public TSObject visitAttributeAssign(AstNode.AttributeAssign node) throws Exception {
+        TSObject object = node.structure.visit(this);
+        if (!(object instanceof TSStructure)) {
+            TimeScript.runtimeError("Does not have attributes");
+            return null;
+        }
+
+        TSStructure structure = (TSStructure) object;
+        structure.setField(node.name, node.expression.visit(this));
+        return null;
     }
 }
