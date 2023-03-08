@@ -1,9 +1,7 @@
 package com.jpl.timescript.interpreter.nativeapi;
 
 import com.jpl.timescript.interpreter.ExecutionEngine;
-import com.jpl.timescript.interpreter.datatypes.TSFunction;
-import com.jpl.timescript.interpreter.datatypes.TSObject;
-import com.jpl.timescript.interpreter.datatypes.TSString;
+import com.jpl.timescript.interpreter.datatypes.*;
 import com.jpl.timescript.interpreter.environment.Environment;
 
 import java.util.Arrays;
@@ -41,6 +39,30 @@ public final class NativeApi {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 return new TSString(environment.get("object").getType());
+            }
+        });
+
+        globalEnvironment.setLocally("len", new TSFunction(Arrays.asList("object")) {
+            @Override
+            public TSObject call(ExecutionEngine engine, Environment environment) {
+                TSObject object = environment.get("object");
+                if (object instanceof TSIterable) {
+                    TSIterable iterable = (TSIterable) object;
+                    return new TSNumber(Double.valueOf(iterable.getSize()));
+                }
+                return null;
+            }
+        });
+
+        globalEnvironment.setLocally("charAt", new TSFunction(Arrays.asList("object", "index")) {
+            @Override
+            public TSObject call(ExecutionEngine engine, Environment environment) {
+                TSObject object = environment.get("object");
+                TSObject index = environment.get("index");
+                if (object instanceof TSIterable) {
+                    return ((TSIterable) object).getIndex(index);
+                }
+                return null;
             }
         });
 

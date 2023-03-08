@@ -25,7 +25,7 @@ public class TSFunction extends TSObject implements TSCallable {
 
     @Override
     public int arity() {
-        return 0;
+        return argumentNames.size();
     }
 
     @Override

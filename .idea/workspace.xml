@@ -4,11 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Implemented Binary Operators (+, -, *, /, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, ||).">
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Implemented unary operators. Changed TSNumber's getValue() method to return double instead of Double for comparisons.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSIterable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSNumber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSNumber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSFunction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/nativeapi/NativeApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/nativeapi/NativeApi.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +226,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678299568305</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Implemented unary operators. Changed TSNumber's getValue() method to return double instead of Double for comparisons.">
+      <created>1678303500786</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1678303500786</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -244,6 +255,7 @@
     <MESSAGE value="Created TSStructure interface to allow for uniform data access with Classes and Instances." />
     <MESSAGE value="Implemented attribute accessing/assigning and structure instantiation." />
     <MESSAGE value="Implemented Binary Operators (+, -, *, /, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, ||)." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented Binary Operators (+, -, *, /, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, ||)." />
+    <MESSAGE value="Implemented unary operators. Changed TSNumber's getValue() method to return double instead of Double for comparisons." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented unary operators. Changed TSNumber's getValue() method to return double instead of Double for comparisons." />
   </component>
 </project>

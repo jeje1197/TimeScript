@@ -246,6 +246,7 @@ public final class Parser {
                 advance();
                 expression = expectExpression();
                 if (expression == null) return null;
+                arguments.add(expression);
             }
         }
 

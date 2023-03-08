@@ -4,8 +4,8 @@ import com.jpl.timescript.TimeScript;
 
 class ObjectHeader {
     String className;
-    // Inheritance List
-    // Method List
+    /* Inheritance List */
+    /* Method List */
     ObjectHeader(String className) {
         this.className = className;
     }

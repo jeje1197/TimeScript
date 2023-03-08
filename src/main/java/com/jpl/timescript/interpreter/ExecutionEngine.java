@@ -199,8 +199,8 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
             TSClass classDefinition = (TSClass) callee;
             return visitConstructor(classDefinition);
 
-        } else if (!(callee instanceof TSFunction)) {
-            System.out.println("Cannot be called");
+        } else if (!(callee instanceof TSCallable)) {
+            TimeScript.runtimeError("Cannot be called");
             return null;
         }
 

@@ -2,7 +2,7 @@ package com.jpl.timescript.interpreter.datatypes;
 
 import com.jpl.timescript.TimeScript;
 
-public final class TSString extends TSObject {
+public final class TSString extends TSObject implements TSIterable{
     private String value;
 
     public TSString(String value) {
@@ -18,6 +18,20 @@ public final class TSString extends TSObject {
     @Override
     public boolean isTruthy() {
         return !toString().isEmpty();
+    }
+
+    @Override
+    public int getSize() {
+        return value.length();
+    }
+
+    @Override
+    public TSObject getIndex(TSObject index) {
+        if (index instanceof TSNumber) {
+            TSNumber indexValue = (TSNumber) index;
+            return new TSString(String.valueOf(value.charAt((int) indexValue.getValue())));
+        }
+        return null;
     }
 
     @Override
