@@ -4,16 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Implemented attribute accessing/assigning and structure instantiation.">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/Arithmetic.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/Comparable.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/Logical.java" afterDir="false" />
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Implemented Binary Operators (+, -, *, /, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, ||).">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSBoolean.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSBoolean.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSNumber.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSNumber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSString.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -221,7 +215,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678261245667</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Implemented Binary Operators (+, -, *, /, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, ||).">
+      <created>1678299568305</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1678299568305</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -242,6 +243,7 @@
     <MESSAGE value="Implemented runtime exceptions in Interpreter." />
     <MESSAGE value="Created TSStructure interface to allow for uniform data access with Classes and Instances." />
     <MESSAGE value="Implemented attribute accessing/assigning and structure instantiation." />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented attribute accessing/assigning and structure instantiation." />
+    <MESSAGE value="Implemented Binary Operators (+, -, *, /, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, ||)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented Binary Operators (+, -, *, /, &lt;, &lt;=, &gt;, &gt;=, &amp;&amp;, ||)." />
   </component>
 </project>

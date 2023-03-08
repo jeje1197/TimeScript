@@ -11,6 +11,7 @@ import java.util.List;
 public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     private Environment environment;
     private static final TSNull nullObject = new TSNull();
+    private static final TSNumber negativeOne = new TSNumber(Double.valueOf(-1));
     private boolean shouldBreak = false;
     private boolean shouldContinue = false;
     private boolean shouldReturn = false;
@@ -46,7 +47,19 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         return nullObject;
     }
 
-    public TSObject visitUnaryOp(AstNode.UnaryOp node) {
+    public TSObject visitUnaryOp(AstNode.UnaryOp node) throws Exception {
+        TSObject expression = node.expression.visit(this);
+
+        switch(node.op) {
+            case "+":
+                return expression;
+            case "-":
+                return expression.multiply(negativeOne);
+            case "!":
+                return new TSBoolean(!expression.isTruthy());
+            default:
+                TimeScript.runtimeError("Unimplemented unary operator: " + node.op);
+        }
         return nullObject;
     }
 
@@ -84,7 +97,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
             case "||":
                 return leftValue.or(rightValue);
             default:
-                TimeScript.runtimeError("Unimplemented binary operator");
+                TimeScript.runtimeError("Unimplemented binary operator: " + node.op);
         }
         return nullObject;
     }

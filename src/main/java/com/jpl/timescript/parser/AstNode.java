@@ -14,7 +14,7 @@ public abstract class AstNode {
         T visitString(String node);
         T visitBoolean(Boolean node);
         T visitNull(Null node);
-        T visitUnaryOp(UnaryOp node);
+        T visitUnaryOp(UnaryOp node) throws Exception;
         T visitBinaryOp(BinaryOp node) throws Exception;
         T visitBlockStatement(BlockStatement node) throws Exception;
         T visitVariableDeclaration(VariableDeclaration node) throws Exception;
@@ -85,7 +85,7 @@ public abstract class AstNode {
         }
 
         @Override
-        public <T> T visit(Visitor<T> visitor) {
+        public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitUnaryOp(this);
         }
     }

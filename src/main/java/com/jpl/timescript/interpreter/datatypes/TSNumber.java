@@ -10,7 +10,7 @@ public final class TSNumber extends TSObject {
         this.value = value;
     }
 
-    public Double getValue() {
+    public double getValue() {
         return value;
     }
 
@@ -21,7 +21,7 @@ public final class TSNumber extends TSObject {
 
     @Override
     public String toString() {
-        Integer integerValue = getValue().intValue();
+        Integer integerValue = value.intValue();
         if (value.doubleValue() == integerValue.intValue())
             return integerValue.toString();
         return value.toString();
