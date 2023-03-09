@@ -11,7 +11,7 @@ import java.util.List;
 public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     private Environment environment;
     private static final TSNull nullObject = new TSNull();
-    private static final TSNumber negativeOne = new TSNumber(Double.valueOf(-1));
+    private static final TSNumber negativeOne = new TSNumber((double) -1);
     private boolean shouldBreak = false;
     private boolean shouldContinue = false;
     private boolean shouldReturn = false;
@@ -105,8 +105,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     @Override
     public TSObject visitBlockStatement(AstNode.BlockStatement node) throws Exception {
         TSObject returnValue = null;
-        Environment newEnvironment = new Environment(environment);
-        environment = newEnvironment;
+        environment = new Environment(environment);
         for (AstNode statement: node.statements) {
             returnValue = statement.visit(this);
             if (shouldBreak || shouldContinue) break;
@@ -223,9 +222,8 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         return function.isNative ? immediateValue : returnValue;
     }
 
-    public TSObject visitConstructor(TSClass classDefinition) throws Exception {
-        TSInstance instance = new TSInstance(classDefinition, new Environment());
-        return instance;
+    public TSObject visitConstructor(TSClass classDefinition) {
+        return new TSInstance(classDefinition, new Environment());
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.jpl.timescript.interpreter.datatypes.*;
 import com.jpl.timescript.interpreter.environment.Environment;
 
 import java.util.Arrays;
+import java.util.List;
 
 public final class NativeApi {
     public static void addNativeData(Environment globalEnvironment) {
@@ -16,7 +17,7 @@ public final class NativeApi {
 
     public static void addNativeFunctions(Environment globalEnvironment) {
         // Print Method
-        globalEnvironment.setLocally("println", new TSFunction(Arrays.asList("text")) {
+        globalEnvironment.setLocally("println", new TSFunction(List.of("text")) {
             @Override
             public int arity() {
                 return 1;
@@ -35,20 +36,20 @@ public final class NativeApi {
         });
 
         // Type Method
-        globalEnvironment.setLocally("type", new TSFunction(Arrays.asList("object")) {
+        globalEnvironment.setLocally("type", new TSFunction(List.of("object")) {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 return new TSString(environment.get("object").getType());
             }
         });
 
-        globalEnvironment.setLocally("len", new TSFunction(Arrays.asList("object")) {
+        globalEnvironment.setLocally("len", new TSFunction(List.of("object")) {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 TSObject object = environment.get("object");
                 if (object instanceof TSIterable) {
                     TSIterable iterable = (TSIterable) object;
-                    return new TSNumber(Double.valueOf(iterable.getSize()));
+                    return new TSNumber((double) iterable.getSize());
                 }
                 return null;
             }
@@ -67,7 +68,7 @@ public final class NativeApi {
         });
 
         // Exit Method
-        globalEnvironment.setLocally("exit", new TSFunction(Arrays.asList()) {
+        globalEnvironment.setLocally("exit", new TSFunction(List.of()) {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 // Indicate an invoked program termination

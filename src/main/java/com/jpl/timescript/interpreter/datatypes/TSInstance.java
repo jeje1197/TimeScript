@@ -11,9 +11,7 @@ public class TSInstance extends TSObject implements TSStructure {
         this.classDeclaration = classDeclaration;
         this.environment = environment;
 
-        classDeclaration.environment.getVariables().entrySet().forEach((entry) -> {
-            environment.setLocally(entry.getKey(), entry.getValue());
-        });
+        classDeclaration.environment.getVariables().forEach((key, value) -> environment.setLocally(key, value));
     }
 
     @Override

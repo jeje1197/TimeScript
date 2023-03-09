@@ -3,7 +3,7 @@ package com.jpl.timescript.interpreter.datatypes;
 import com.jpl.timescript.TimeScript;
 
 public final class TSBoolean extends TSObject {
-    private Boolean value;
+    private final Boolean value;
 
     public TSBoolean(Boolean value) {
         super("Boolean");

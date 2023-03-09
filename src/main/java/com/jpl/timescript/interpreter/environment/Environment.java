@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class Environment {
-    private Map<String, TSObject> variables = new HashMap<>();
+    private final Map<String, TSObject> variables = new HashMap<>();
     private Environment parent = null;
 
     public Environment() { }

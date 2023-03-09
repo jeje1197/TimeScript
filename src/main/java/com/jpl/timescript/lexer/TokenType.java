@@ -2,7 +2,6 @@ package com.jpl.timescript.lexer;
 
 public enum TokenType {
     DISCARD,
-    NEWLINE,
     NUMBER,
     STRING,
     KEYWORD,

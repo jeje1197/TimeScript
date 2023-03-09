@@ -3,7 +3,7 @@ package com.jpl.timescript.interpreter.datatypes;
 import com.jpl.timescript.TimeScript;
 
 public final class TSNumber extends TSObject {
-    private Double value;
+    private final Double value;
 
     public TSNumber(Double value) {
         super("Number");
@@ -21,9 +21,8 @@ public final class TSNumber extends TSObject {
 
     @Override
     public String toString() {
-        Integer integerValue = value.intValue();
-        if (value.doubleValue() == integerValue.intValue())
-            return integerValue.toString();
+        if (value == value.intValue())
+            return Integer.toString(value.intValue());
         return value.toString();
     }
 

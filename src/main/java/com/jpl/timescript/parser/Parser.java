@@ -44,14 +44,6 @@ public final class Parser {
         return peek().type == TokenType.KEYWORD && peek().value.equals(keyword);
     }
 
-    private static boolean matchNext(TokenType type) {
-        return peekNext() != null && peekNext().type == type;
-    }
-
-    private static boolean matchNext(String value) {
-        return peekNext() != null && peekNext().value.equals(value);
-    }
-
     private static boolean matchNext(TokenType type, String value) {
         return peekNext() != null && peekNext().type == type && peekNext().value.equals(value);
     }
@@ -144,7 +136,7 @@ public final class Parser {
 
     private static AstNode variableDeclaration() {
         Token name;
-        AstNode expression = null;
+        AstNode expression;
         advance();
         if (!expect(TokenType.ID, "Expected identifier")) return null;
         name = advance();
@@ -210,7 +202,7 @@ public final class Parser {
 
     private static AstNode functionDeclaration() {
         List<String> arguments = new ArrayList<>();
-        List<AstNode> statements = new ArrayList<>();
+        List<AstNode> statements;
         advance();
         if (!expect(TokenType.LPAREN, "Expected '('")) return null;
         advance();
@@ -262,8 +254,8 @@ public final class Parser {
     }
 
     private static AstNode classDeclaration() {
-        Token name = null;
-        List<AstNode> statements = null;
+        Token name;
+        List<AstNode> statements;
         advance();
         if (!expect(TokenType.ID, "Expected class identifier")) return null;
         name = advance();

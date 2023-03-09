@@ -18,8 +18,8 @@ import java.nio.file.Paths;
 import java.util.List;
 
 public final class TimeScript {
-    private static Environment globalEnvironment = new Environment();
-    private static ExecutionEngine engine = new ExecutionEngine(globalEnvironment);
+    private static final Environment globalEnvironment = new Environment();
+    private static final ExecutionEngine engine = new ExecutionEngine(globalEnvironment);
     static {
         NativeApi.addNativeData(globalEnvironment);
     }
@@ -61,15 +61,13 @@ public final class TimeScript {
 
     public static void run(String code) {
         List<Token> tokens = Lexer.getTokens(code);
-//        tokens.forEach((token) -> System.out.println(token));
         if (hadError) return;
 
         List<AstNode> statements = Parser.parse(tokens);
         if (hadError) return;
 
-        TSObject result = null;
         try {
-            result = engine.visit(statements);
+            TSObject result = engine.visit(statements);
             System.out.println(result);
         } catch (Exception e) {
             System.out.println("Runtime Exception: " + e.getMessage());
