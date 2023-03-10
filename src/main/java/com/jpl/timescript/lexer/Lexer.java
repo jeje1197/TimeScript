@@ -23,6 +23,7 @@ public final class Lexer {
 
             new PatternNode(TokenType.NUMBER, "^(\\d+(\\.\\d+|\\.\\d+)?)"),
             new PatternNode(TokenType.STRING, "^\"(.|\n)*?\""),
+            new PatternNode(TokenType.STRING, "^'(.|\n)*?'"),
             new PatternNode(TokenType.ID, "^[A-Za-z_]\\w*"),
             new PatternNode(TokenType.OP, "^(\\+|-|\\*|/|%)"),
             new PatternNode(TokenType.OP, "^(<=|<<|<|>=|>>|>|==|=|!=|!|&{2}|\\|{2})"),

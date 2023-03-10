@@ -46,7 +46,9 @@ public abstract class AstNode {
     public static class String extends AstNode {
         public java.lang.String value;
         public String(Token token) {
-            this.value = token.value;
+            this.value = token.value.replace("\\\\", "\\")
+                    .replace("\\t", "\t")
+                    .replace("\\n", "\n");
         }
 
         @Override

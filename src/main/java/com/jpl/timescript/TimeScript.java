@@ -20,8 +20,9 @@ import java.util.List;
 public final class TimeScript {
     private static final Environment globalEnvironment = new Environment();
     private static final ExecutionEngine engine = new ExecutionEngine(globalEnvironment);
+    private static boolean initialized = false;
     static {
-        NativeApi.addNativeData(globalEnvironment);
+        init();
     }
 
     private static boolean hadError = false;
@@ -38,7 +39,15 @@ public final class TimeScript {
         }
     }
 
-    private static void runShell() throws IOException {
+    public static boolean init() {
+        if (!initialized) {
+            NativeApi.addNativeData(globalEnvironment);
+            initialized = true;
+        }
+        return true;
+    }
+
+    public static void runShell() throws IOException {
         InputStreamReader input = new InputStreamReader(System.in);
         BufferedReader reader = new BufferedReader(input);
 

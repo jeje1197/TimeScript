@@ -1,5 +1,6 @@
 package com.jpl.timescript.interpreter.nativeapi;
 
+import com.jpl.timescript.TimeScript;
 import com.jpl.timescript.interpreter.ExecutionEngine;
 import com.jpl.timescript.interpreter.datatypes.*;
 import com.jpl.timescript.interpreter.environment.Environment;
@@ -8,42 +9,37 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class NativeApi {
-    public static void addNativeData(Environment globalEnvironment) {
-        addNativeVariables(globalEnvironment);
-        addNativeFunctions(globalEnvironment);
+    private static Environment environment;
+
+    public static void addNativeData(Environment environment) {
+        NativeApi.environment = environment;
+        addNativeFunctions();
     }
 
-    public static void addNativeVariables(Environment globalEnvironment) {}
+    public static void addData(String variableName, TSObject data) {
+        NativeApi.environment.setLocally(variableName, data);
+    }
 
-    public static void addNativeFunctions(Environment globalEnvironment) {
+    private static void addNativeFunctions() {
+
         // Print Method
-        globalEnvironment.setLocally("println", new TSFunction(List.of("text")) {
-            @Override
-            public int arity() {
-                return 1;
-            }
-
+        addData("println", new TSFunction(List.of("text")) {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 System.out.println(environment.get("text"));
                 return null;
             }
-
-            @Override
-            public String toString() {
-                return "<native fn>";
-            }
         });
 
         // Type Method
-        globalEnvironment.setLocally("type", new TSFunction(List.of("object")) {
+        addData("type", new TSFunction(List.of("object")) {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 return new TSString(environment.get("object").getType());
             }
         });
 
-        globalEnvironment.setLocally("len", new TSFunction(List.of("object")) {
+        addData("len", new TSFunction(List.of("object")) {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 TSObject object = environment.get("object");
@@ -55,7 +51,7 @@ public final class NativeApi {
             }
         });
 
-        globalEnvironment.setLocally("charAt", new TSFunction(Arrays.asList("object", "index")) {
+        addData("charAt", new TSFunction(Arrays.asList("object", "index")) {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 TSObject object = environment.get("object");
@@ -68,7 +64,7 @@ public final class NativeApi {
         });
 
         // Exit Method
-        globalEnvironment.setLocally("exit", new TSFunction(List.of()) {
+        addData("exit", new TSFunction(List.of()) {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 // Indicate an invoked program termination
