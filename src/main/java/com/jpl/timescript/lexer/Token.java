@@ -1,7 +1,6 @@
 package com.jpl.timescript.lexer;
 
 // A Token is the smallest meaningful unit in a programming language
-// It contains a type and value.
 public final class Token {
     public TokenType type;
     public String value;

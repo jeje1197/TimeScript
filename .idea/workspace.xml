@@ -9,13 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Completed first build for TimeScript interpreter. Future Update: JAR file">
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/TimeScript_jar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/TimeScript_jar.xml" afterDir="false" />
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Added NativeApi.addData() method to provide a way to add variables/functions for embedded use.">
+      <change afterPath="$PROJECT_DIR$/examples/1" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/nativeapi/NativeApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/nativeapi/NativeApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Lexer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Token.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/lexer/Token.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,20 +47,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Java_Workspace/TimeScript/src/main/resources",
-    "project.structure.last.edited": "Artifacts",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "editor.preferences.appearance"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Java_Workspace/TimeScript/src/main/resources&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.appearance&quot;
   }
-}]]></component>
-  <component name="RunManager">
-    <configuration name="TimeScript" type="Application" factoryName="Application" temporary="true">
+}</component>
+  <component name="RunManager" selected="Application.TimeScript (Read From File 1)">
+    <configuration name="TimeScript (Read From File 1)" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="com.jpl.timescript.TimeScript" />
+      <module name="TimeScript.main" />
+      <option name="PROGRAM_PARAMETERS" value="examples\1" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TimeScript" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.jpl.timescript.TimeScript" />
       <module name="TimeScript.main" />
       <extension name="coverage">
@@ -82,6 +89,10 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue="Application.TimeScript (Read From File 1)" />
+      <item itemvalue="Application.TimeScript" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -253,7 +264,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678349606540</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Added NativeApi.addData() method to provide a way to add variables/functions for embedded use.">
+      <created>1678444673968</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1678444673968</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -278,6 +296,7 @@
     <MESSAGE value="Implemented unary operators. Changed TSNumber's getValue() method to return double instead of Double for comparisons." />
     <MESSAGE value="Fixed parsing for function calls." />
     <MESSAGE value="Completed first build for TimeScript interpreter. Future Update: JAR file" />
-    <option name="LAST_COMMIT_MESSAGE" value="Completed first build for TimeScript interpreter. Future Update: JAR file" />
+    <MESSAGE value="Added NativeApi.addData() method to provide a way to add variables/functions for embedded use." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added NativeApi.addData() method to provide a way to add variables/functions for embedded use." />
   </component>
 </project>

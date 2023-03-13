@@ -18,7 +18,7 @@ public final class Lexer {
     ));
 
     private static final PatternNode[] patterns = {
-            new PatternNode(TokenType.DISCARD, "^( |\t|\n)+"), // whitespace
+            new PatternNode(TokenType.DISCARD, "^(\\s)+"), // whitespace
             new PatternNode(TokenType.DISCARD, "^(#.*\n?)"), // comments
 
             new PatternNode(TokenType.NUMBER, "^(\\d+(\\.\\d+|\\.\\d+)?)"),

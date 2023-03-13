@@ -10,6 +10,7 @@ import com.jpl.timescript.parser.AstNode;
 import com.jpl.timescript.parser.Parser;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -64,14 +65,14 @@ public final class TimeScript {
     private static void runFile(String path) throws IOException {
         byte[] bytes = Files.readAllBytes(Paths.get(path));
         run(new String(bytes, Charset.defaultCharset()));
-        // Indicate an error in the exit code.
-        if (hadError) System.exit(65);
     }
 
     public static void run(String code) {
+//        System.out.println("Lexing");
         List<Token> tokens = Lexer.getTokens(code);
         if (hadError) return;
 
+//        System.out.println("Scanning");
         List<AstNode> statements = Parser.parse(tokens);
         if (hadError) return;
 
@@ -83,11 +84,13 @@ public final class TimeScript {
         }
     }
 
+    // Method for static error messages during parsing stages
     public static void error(String message, int line) {
         System.out.println(message + ", line " + line);
         hadError = true;
     }
 
+    // Method for dynamic error message reporting
     public static void runtimeError(String message) throws Exception {
         hadRuntimeError = true;
         throw new Exception(message);
