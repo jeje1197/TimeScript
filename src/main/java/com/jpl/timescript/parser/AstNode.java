@@ -48,7 +48,8 @@ public abstract class AstNode {
         public String(Token token) {
             this.value = token.value.replace("\\\\", "\\")
                     .replace("\\t", "\t")
-                    .replace("\\n", "\n");
+                    .replace("\\n", "\n")
+                    .replace("\\r", "\r");
         }
 
         @Override

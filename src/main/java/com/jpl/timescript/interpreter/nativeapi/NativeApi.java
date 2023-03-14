@@ -27,7 +27,7 @@ public final class NativeApi {
             @Override
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 System.out.println(environment.get("text"));
-                return null;
+                return new TSNull();
             }
         });
 
@@ -41,25 +41,27 @@ public final class NativeApi {
 
         addData("len", new TSFunction(List.of("object")) {
             @Override
-            public TSObject call(ExecutionEngine engine, Environment environment) {
+            public TSObject call(ExecutionEngine engine, Environment environment) throws Exception {
                 TSObject object = environment.get("object");
                 if (object instanceof TSIterable) {
                     TSIterable iterable = (TSIterable) object;
                     return new TSNumber((double) iterable.getSize());
                 }
-                return null;
+                TimeScript.runtimeError("Non iterable object passed to len function");
+                return new TSNull();
             }
         });
 
         addData("charAt", new TSFunction(Arrays.asList("object", "index")) {
             @Override
-            public TSObject call(ExecutionEngine engine, Environment environment) {
+            public TSObject call(ExecutionEngine engine, Environment environment) throws Exception {
                 TSObject object = environment.get("object");
                 TSObject index = environment.get("index");
                 if (object instanceof TSIterable) {
                     return ((TSIterable) object).getIndex(index);
                 }
-                return null;
+                TimeScript.runtimeError("Non iterable object passed to charAt function");
+                return new TSNull();
             }
         });
 
@@ -69,7 +71,7 @@ public final class NativeApi {
             public TSObject call(ExecutionEngine engine, Environment environment) {
                 // Indicate an invoked program termination
                 System.exit(71);
-                return null;
+                return new TSNull();
             }
         });
     }

@@ -1,6 +1,7 @@
 package com.jpl.timescript;
 
 import com.jpl.timescript.interpreter.ExecutionEngine;
+import com.jpl.timescript.interpreter.datatypes.TSNull;
 import com.jpl.timescript.interpreter.datatypes.TSObject;
 import com.jpl.timescript.interpreter.environment.Environment;
 import com.jpl.timescript.interpreter.nativeapi.NativeApi;
@@ -10,7 +11,6 @@ import com.jpl.timescript.parser.AstNode;
 import com.jpl.timescript.parser.Parser;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
@@ -78,7 +78,9 @@ public final class TimeScript {
 
         try {
             TSObject result = engine.visit(statements);
-            System.out.println(result);
+            if (!(result instanceof TSNull)) {
+                System.out.println(result);
+            }
         } catch (Exception e) {
             System.out.println("Runtime Exception: " + e.getMessage());
         }

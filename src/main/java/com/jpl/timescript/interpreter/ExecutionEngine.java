@@ -10,6 +10,8 @@ import java.util.List;
 
 public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     private Environment environment;
+    private static final TSBoolean trueObject = new TSBoolean(true);
+    private static final TSBoolean falseObject = new TSBoolean(false);
     private static final TSNull nullObject = new TSNull();
     private static final TSNumber negativeOne = new TSNumber((double) -1);
     private boolean shouldBreak = false;
@@ -22,7 +24,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     public TSObject visit(List<AstNode> statements) throws Exception {
-        TSObject returnValue = null;
+        TSObject returnValue = nullObject;
         for (AstNode node: statements) {
             returnValue = node.visit(this);
             if (shouldBreak || shouldContinue) break;
@@ -40,7 +42,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     public TSObject visitBoolean(AstNode.Boolean node) {
-        return new TSBoolean(node.value);
+        return node.value ? trueObject : falseObject;
     }
 
     public TSObject visitNull(AstNode.Null node) {
@@ -104,7 +106,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
     @Override
     public TSObject visitBlockStatement(AstNode.BlockStatement node) throws Exception {
-        TSObject returnValue = null;
+        TSObject returnValue = nullObject;
         environment = new Environment(environment);
         for (AstNode statement: node.statements) {
             returnValue = statement.visit(this);
@@ -146,13 +148,13 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         if (node.conditionExpression.visit(this).isTruthy()) {
             return node.ifStatement.visit(this);
         } else {
-            return node.elseStatement != null ? node.elseStatement.visit(this) : null;
+            return node.elseStatement != null ? node.elseStatement.visit(this) : nullObject;
         }
     }
 
     @Override
     public TSObject visitWhileLoop(AstNode.WhileLoop node) throws Exception {
-        TSObject returnValue = null;
+        TSObject returnValue = nullObject;
         while(node.conditionExpression.visit(this).isTruthy()) {
             returnValue = node.statement.visit(this);
             if (shouldBreak) {
