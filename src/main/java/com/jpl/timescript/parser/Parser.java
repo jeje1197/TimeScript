@@ -110,8 +110,16 @@ public final class Parser {
     }
 
 
-    /* blockStatement |
-     *
+    /* blockStatement
+     *  | variableDeclaration
+     *  | variableAssignment
+     *  | ifStatement
+     *  | whileLoop
+     *  | breakStatement
+     *  | continueStatement
+     *  | functionDeclaration
+     *  | returnStatement
+     *  | classDeclaration
      */
     private static AstNode statement() {
         if (match(TokenType.LBRACE)) {
@@ -247,7 +255,7 @@ public final class Parser {
         statements = statements();
         if (!expect(TokenType.RBRACE, "Expected '}'")) return null;
         advance();
-        return new AstNode.Function(arguments, statements);
+        return new AstNode.FunctionDeclaration(name, arguments, statements);
     }
 
     // expr "(" (expr ("," expr)* )? ")"
@@ -383,8 +391,6 @@ public final class Parser {
                 } else if (matchKeyword("null")) {
                     advance();
                     return new AstNode.Null();
-                } else if (match("function") && matchNext(TokenType.ID)) {
-                    return functionDeclaration();
                 }
                 break;
             case OP:

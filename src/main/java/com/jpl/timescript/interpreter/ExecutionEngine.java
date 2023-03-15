@@ -107,13 +107,14 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     @Override
     public TSObject visitBlockStatement(AstNode.BlockStatement node) throws Exception {
         TSObject returnValue = nullObject;
+        Environment previous = environment;
         environment = new Environment(environment);
         for (AstNode statement: node.statements) {
             returnValue = statement.visit(this);
             if (shouldBreak || shouldContinue) break;
             if (shouldReturn) break;
         }
-        environment = environment.getParent();
+        environment = previous;
         return returnValue;
     }
 
@@ -183,8 +184,9 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     @Override
-    public TSObject visitFunction(AstNode.Function node) {
-        return new TSFunction(node.arguments, node.statements);
+    public TSObject visitFunctionDeclaration(AstNode.FunctionDeclaration node) {
+        environment.setLocally(node.name, new TSFunction(node.arguments, node.statements));
+        return nullObject;
     }
 
     @Override
@@ -199,7 +201,6 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         if (callee instanceof TSClass) {
             TSClass classDefinition = (TSClass) callee;
             return visitConstructor(classDefinition);
-
         } else if (!(callee instanceof TSCallable)) {
             TimeScript.runtimeError("Cannot be called");
             return null;
@@ -211,14 +212,13 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
                     " received " + arguments.size());
         }
 
-        Environment functionEnvironment = new Environment(environment);
+        Environment previous = environment;
+        environment = new Environment(environment);
         for (int i = 0; i < function.arity(); i++) {
-            functionEnvironment.setLocally(function.argumentNames.get(i), arguments.get(i));
+            environment.setLocally(function.argumentNames.get(i), arguments.get(i));
         }
-
-        environment = functionEnvironment;
-        TSObject immediateValue = function.call(this, functionEnvironment);
-        environment = functionEnvironment.getParent();
+        TSObject immediateValue = function.call(this, environment);
+        environment = previous;
 
         shouldReturn = false;
         return function.isNative ? immediateValue : returnValue;

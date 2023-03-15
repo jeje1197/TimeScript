@@ -20,7 +20,7 @@ import java.util.List;
 
 public final class TimeScript {
     private static final Environment globalEnvironment = new Environment();
-    private static final ExecutionEngine engine = new ExecutionEngine(globalEnvironment);
+    private static ExecutionEngine engine;
     private static boolean initialized = false;
     static {
         init();
@@ -76,14 +76,15 @@ public final class TimeScript {
         List<AstNode> statements = Parser.parse(tokens);
         if (hadError) return;
 
-//        try {
-//            TSObject result = engine.visit(statements);
-//            if (!(result instanceof TSNull)) {
-//                System.out.println(result);
-//            }
-//        } catch (Exception e) {
-//            System.out.println("Runtime Exception: " + e.getMessage());
-//        }
+        engine = new ExecutionEngine(globalEnvironment);
+        try {
+            TSObject result = engine.visit(statements);
+            if (!(result instanceof TSNull)) {
+                System.out.println(result);
+            }
+        } catch (Exception e) {
+            System.out.println("Runtime Exception: " + e.getMessage());
+        }
     }
 
     // Method for static error messages during parsing stages

@@ -9,11 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Updated true and false to always point to a single TSBoolean object for each in order to save memory.">
-      <change afterPath="$PROJECT_DIR$/examples/script.tsc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Parser.java: Refactoring parser to use block statements for function and class declarations. Grammar rules are now being commented above each method in the parser.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/environment/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/environment/Environment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -301,7 +302,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678775554555</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Parser.java: Refactoring parser to use block statements for function and class declarations. Grammar rules are now being commented above each method in the parser.">
+      <created>1678907564245</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1678907564245</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -328,6 +336,7 @@
     <MESSAGE value="Completed first build for TimeScript interpreter. Future Update: JAR file" />
     <MESSAGE value="Added NativeApi.addData() method to provide a way to add variables/functions for embedded use." />
     <MESSAGE value="Updated true and false to always point to a single TSBoolean object for each in order to save memory." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated true and false to always point to a single TSBoolean object for each in order to save memory." />
+    <MESSAGE value="Parser.java: Refactoring parser to use block statements for function and class declarations. Grammar rules are now being commented above each method in the parser." />
+    <option name="LAST_COMMIT_MESSAGE" value="Parser.java: Refactoring parser to use block statements for function and class declarations. Grammar rules are now being commented above each method in the parser." />
   </component>
 </project>

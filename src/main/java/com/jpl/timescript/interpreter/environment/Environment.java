@@ -19,7 +19,7 @@ public final class Environment {
     public boolean containsKey(String key) {
         Environment current = this;
         while (current != null) {
-            if (containsKeyLocally(key)) return true;
+            if (current.containsKeyLocally(key)) return true;
             current = current.parent;
         }
         return false;

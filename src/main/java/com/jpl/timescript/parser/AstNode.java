@@ -22,7 +22,7 @@ public abstract class AstNode {
         T visitWhileLoop(WhileLoop node) throws Exception;
         T visitBreakStatement(BreakStatement node);
         T visitContinueStatement(ContinueStatement node);
-        T visitFunction(Function node);
+        T visitFunctionDeclaration(FunctionDeclaration node);
         T visitFunctionCall(FunctionCall node) throws Exception;
         T visitReturnStatement(ReturnStatement node) throws Exception;
         T visitClass(Class node) throws Exception;
@@ -202,18 +202,20 @@ public abstract class AstNode {
         }
     }
 
-    public static class Function extends AstNode {
+    public static class FunctionDeclaration extends AstNode {
+        public java.lang.String name;
         public List<java.lang.String> arguments;
         public List<AstNode> statements;
 
-        public Function(List<java.lang.String> arguments, List<AstNode> statements) {
+        public FunctionDeclaration(Token name, List<java.lang.String> arguments, List<AstNode> statements) {
+            this.name = name.value;
             this.arguments = arguments;
             this.statements = statements;
         }
 
         @Override
         public <T> T visit(Visitor<T> visitor) {
-            return visitor.visitFunction(this);
+            return visitor.visitFunctionDeclaration(this);
         }
     }
 
