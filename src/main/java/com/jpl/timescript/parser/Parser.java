@@ -44,6 +44,10 @@ public final class Parser {
         return peek().type == TokenType.KEYWORD && peek().value.equals(keyword);
     }
 
+    private static boolean matchNext(TokenType type) {
+        return peekNext().type == type;
+    }
+
     private static boolean matchNext(TokenType type, String value) {
         return peekNext() != null && peekNext().type == type && peekNext().value.equals(value);
     }
@@ -80,6 +84,7 @@ public final class Parser {
         return expression;
     }
 
+    // statements
     public static List<AstNode> parse(List<Token> tokens) {
         // Reset static fields before use
         Parser.tokens = tokens;
@@ -92,6 +97,7 @@ public final class Parser {
         return statements;
     }
 
+    // statement*
     private static List<AstNode> statements() {
         List<AstNode> statements = new ArrayList<>();
         while (!match(TokenType.END)) {
@@ -103,6 +109,10 @@ public final class Parser {
         return statements;
     }
 
+
+    /* blockStatement |
+     *
+     */
     private static AstNode statement() {
         if (match(TokenType.LBRACE)) {
             return blockStatement();
@@ -118,6 +128,8 @@ public final class Parser {
             return breakStatement();
         } else if (matchKeyword("continue")) {
             return continueStatement();
+        } else if (matchKeyword("function")) {
+            return functionDeclaration();
         } else if (matchKeyword("return")) {
             return returnStatement();
         } else if (matchKeyword("class")) {
@@ -126,6 +138,7 @@ public final class Parser {
         return expression();
     }
 
+    // "{" statement* "}"
     private static AstNode blockStatement() {
         advance();
         List<AstNode> statements = statements();
@@ -134,6 +147,7 @@ public final class Parser {
         return new AstNode.BlockStatement(statements);
     }
 
+    // "var" ID ("=" expr)?
     private static AstNode variableDeclaration() {
         Token name;
         AstNode expression;
@@ -147,6 +161,7 @@ public final class Parser {
         return new AstNode.VariableDeclaration(name, expression);
     }
 
+    // ID "=" expr
     private static AstNode variableAssignment() {
         Token name = advance();
         advance();
@@ -155,6 +170,7 @@ public final class Parser {
         return new AstNode.VariableAssignment(name, expression);
     }
 
+    // "if" "(" expr ")" statement ("else" statement)?
     private static AstNode ifStatement() {
         AstNode conditionExpression;
         AstNode ifStatement;
@@ -176,6 +192,7 @@ public final class Parser {
         return new AstNode.IfStatement(conditionExpression, ifStatement, elseStatement);
     }
 
+    // "while" "(" expr ")" statement
     public static AstNode whileLoop() {
         AstNode conditionExpression, statement;
         advance();
@@ -190,20 +207,27 @@ public final class Parser {
         return new AstNode.WhileLoop(conditionExpression, statement);
     }
 
+    // "break"
     private static AstNode breakStatement() {
         advance();
         return new AstNode.BreakStatement();
     }
 
+    // "continue"
     private static AstNode continueStatement() {
         advance();
         return new AstNode.ContinueStatement();
     }
 
+    // "function" ID? "(" (ID ("," ID)* )? ")" blockStatement
     private static AstNode functionDeclaration() {
+        Token name;
         List<String> arguments = new ArrayList<>();
         List<AstNode> statements;
         advance();
+
+        if (!expect(TokenType.ID, "Expected class identifier")) return null;
+        name = advance();
         if (!expect(TokenType.LPAREN, "Expected '('")) return null;
         advance();
         if (match(TokenType.ID)) {
@@ -226,6 +250,7 @@ public final class Parser {
         return new AstNode.Function(arguments, statements);
     }
 
+    // expr "(" (expr ("," expr)* )? ")"
     private static AstNode functionCall(AstNode callee) {
         List<AstNode> arguments = new ArrayList<>();
         advance();
@@ -247,12 +272,14 @@ public final class Parser {
         return new AstNode.FunctionCall(callee, arguments);
     }
 
+    // "return"
     private static AstNode returnStatement() {
         advance();
         AstNode expression = expression();
         return new AstNode.ReturnStatement(expression);
     }
 
+    // "class" ID ("<-" expr)? blockStatement
     private static AstNode classDeclaration() {
         Token name;
         List<AstNode> statements;
@@ -267,6 +294,7 @@ public final class Parser {
         return new AstNode.Class(name, statements);
     }
 
+    // "." ID
     private static AstNode attributeAccess(AstNode atom) {
         Token name;
         if (!expect(TokenType.ID, "Expected attribute name")) return null;
@@ -274,6 +302,7 @@ public final class Parser {
         return new AstNode.AttributeAccess(atom, name);
     }
 
+    // "." ID "=" expr
     private static AstNode attributeAssign(AstNode atom) {
         Token name;
         AstNode expression;
@@ -354,7 +383,7 @@ public final class Parser {
                 } else if (matchKeyword("null")) {
                     advance();
                     return new AstNode.Null();
-                } else if (match("function")) {
+                } else if (match("function") && matchNext(TokenType.ID)) {
                     return functionDeclaration();
                 }
                 break;

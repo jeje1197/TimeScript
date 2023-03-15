@@ -76,14 +76,14 @@ public final class TimeScript {
         List<AstNode> statements = Parser.parse(tokens);
         if (hadError) return;
 
-        try {
-            TSObject result = engine.visit(statements);
-            if (!(result instanceof TSNull)) {
-                System.out.println(result);
-            }
-        } catch (Exception e) {
-            System.out.println("Runtime Exception: " + e.getMessage());
-        }
+//        try {
+//            TSObject result = engine.visit(statements);
+//            if (!(result instanceof TSNull)) {
+//                System.out.println(result);
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Runtime Exception: " + e.getMessage());
+//        }
     }
 
     // Method for static error messages during parsing stages

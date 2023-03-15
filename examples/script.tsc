@@ -1,0 +1,23 @@
+# This is an example script in TimeScript
+
+# We'll get employee information and store it in an Employee object
+class Employee {
+    var name
+    var phone
+    var email
+
+    function constructor(name, phone, email) {
+        this.name = name
+        this.phone = phone
+        this.email = email
+    }
+
+    function stringify() {
+        return "[Name: " + this.name + ", Phone Number: " + this.phone + ", email: " +
+            this.email + "]"
+    }
+}
+
+var employee = Employee("Joseph", "1234567890", "Joseph@gmail.com")
+print(employee.stringify())
+
