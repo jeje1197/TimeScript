@@ -35,6 +35,12 @@ public final class TSString extends TSObject implements TSIterable{
     }
 
     @Override
+    public TSObject setIndex(TSObject index, TSObject value) throws Exception {
+        TimeScript.runtimeError("Strings are immutable");
+        return null;
+    }
+
+    @Override
     public TSObject add(TSObject other) {
         return new TSString(this + other.toString());
     }

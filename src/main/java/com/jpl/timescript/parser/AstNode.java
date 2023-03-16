@@ -28,6 +28,8 @@ public abstract class AstNode {
         T visitClass(Class node) throws Exception;
         T visitAttributeAccess(AttributeAccess node) throws Exception;
         T visitAttributeAssign(AttributeAssign node) throws Exception;
+        T visitIndexAccess(IndexAccess node) throws Exception;
+        T visitIndexAssign(IndexAssign node) throws Exception;
     }
 
 
@@ -288,6 +290,35 @@ public abstract class AstNode {
         @Override
         public <T> T visit(Visitor<T> visitor) throws Exception {
             return visitor.visitAttributeAssign(this);
+        }
+    }
+
+    public static class IndexAccess extends AstNode {
+        public AstNode iterable, index;
+
+        public IndexAccess(AstNode iterable, AstNode index) {
+            this.iterable = iterable;
+            this.index = index;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) throws Exception {
+            return visitor.visitIndexAccess(this);
+        }
+    }
+
+    public static class IndexAssign extends AstNode {
+        public AstNode iterable, index, expr;
+
+        public IndexAssign(AstNode iterable, AstNode index, AstNode expr) {
+            this.iterable = iterable;
+            this.index = index;
+            this.expr = expr;
+        }
+
+        @Override
+        public <T> T visit(Visitor<T> visitor) throws Exception {
+            return visitor.visitIndexAssign(this);
         }
     }
 }

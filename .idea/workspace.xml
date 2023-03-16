@@ -9,10 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Environment.java: Fixed containsKey() method. Now searches all environments in chain for symbols.">
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Environment.java: Updated all methods to work properly with all environments in the chain.&#10;ExecutionEngine.java: Updated methods with scoping to keep track of environment before creating a new scope and deleting that scope.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/environment/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/environment/Environment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSIterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSIterable.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSString.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -312,11 +315,17 @@
       <option name="project" value="LOCAL" />
       <updated>1678918307343</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="Environment.java: Updated all methods to work properly with all environments in the chain.&#10;ExecutionEngine.java: Updated methods with scoping to keep track of environment before creating a new scope and deleting that scope.">
+      <created>1678934688230</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1678934688230</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated Token class to fit single responsibility principle. Lexer adjusted to capture keywords and identifiers correctly. Replaced exception throwing in Lexer with static error messaging." />
     <MESSAGE value="Updated parser to work with unary operations, binary operations and parenthesis." />
     <MESSAGE value="Created TSObject datatype to serve as the foundation of all data in the language." />
     <MESSAGE value="Created Visitor interface to make node accessing more efficient. Creating environment." />
@@ -341,6 +350,7 @@
     <MESSAGE value="Updated true and false to always point to a single TSBoolean object for each in order to save memory." />
     <MESSAGE value="Parser.java: Refactoring parser to use block statements for function and class declarations. Grammar rules are now being commented above each method in the parser." />
     <MESSAGE value="Environment.java: Fixed containsKey() method. Now searches all environments in chain for symbols." />
-    <option name="LAST_COMMIT_MESSAGE" value="Environment.java: Fixed containsKey() method. Now searches all environments in chain for symbols." />
+    <MESSAGE value="Environment.java: Updated all methods to work properly with all environments in the chain.&#10;ExecutionEngine.java: Updated methods with scoping to keep track of environment before creating a new scope and deleting that scope." />
+    <option name="LAST_COMMIT_MESSAGE" value="Environment.java: Updated all methods to work properly with all environments in the chain.&#10;ExecutionEngine.java: Updated methods with scoping to keep track of environment before creating a new scope and deleting that scope." />
   </component>
 </project>

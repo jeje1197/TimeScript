@@ -281,4 +281,29 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         structure.setField(node.name, node.expression.visit(this));
         return null;
     }
+
+    @Override
+    public TSObject visitIndexAccess(AstNode.IndexAccess node) throws Exception {
+        TSObject object = node.iterable.visit(this);
+        if (!(object instanceof TSIterable)) {
+            TimeScript.runtimeError("Object is not an iterable");
+            return null;
+        }
+
+        TSIterable iterable = (TSIterable) object;
+        return iterable.getIndex(node.index.visit(this));
+    }
+
+    @Override
+    public TSObject visitIndexAssign(AstNode.IndexAssign node) throws Exception {
+        TSObject object = node.iterable.visit(this);
+        if (!(object instanceof TSIterable)) {
+            TimeScript.runtimeError("Object is not an iterable");
+            return null;
+        }
+
+        TSIterable iterable = (TSIterable) object;
+        iterable.setIndex(node.index.visit(this), node.expr.visit(this));
+        return nullObject;
+    }
 }

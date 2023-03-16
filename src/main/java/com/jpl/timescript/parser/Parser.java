@@ -40,6 +40,10 @@ public final class Parser {
         return peek().value.equals(value);
     }
 
+    private static boolean match(TokenType type, String value) {
+        return match(type) && match(value);
+    }
+
     private static boolean matchKeyword(String keyword) {
         return peek().type == TokenType.KEYWORD && peek().value.equals(keyword);
     }
@@ -324,6 +328,25 @@ public final class Parser {
         return new AstNode.AttributeAssign(atom, name, expression);
     }
 
+    // "[" expr "]"
+    private static AstNode indexAccess(AstNode atom) {
+        advance();
+        AstNode expression = expectExpression();
+        if (expression == null) return null;
+        if (!expect(TokenType.RBRACKET, "Expected ']'")) return null;
+        advance();
+        return new AstNode.IndexAccess(atom, expression);
+    }
+
+    private static AstNode indexAssign(AstNode atom) {
+        advance();
+        AstNode expression = expectExpression();
+        if (expression == null) return null;
+
+        AstNode.IndexAccess indexAccess = (AstNode.IndexAccess) atom;
+        return new AstNode.IndexAssign(indexAccess.iterable, indexAccess.index, expression);
+    }
+
 
     private static AstNode expression() {
         return binaryOperation("comparison1", Arrays.asList("&&", "||"), "comparison1");
@@ -348,7 +371,7 @@ public final class Parser {
     private static AstNode modifier() {
         AstNode atom = atom();
 
-        while (atom != null && (match(TokenType.LPAREN) || match(TokenType.DOT))) {
+        while (atom != null && (match(TokenType.LPAREN) || match(TokenType.DOT) || match(TokenType.LBRACKET))) {
             if (match(TokenType.LPAREN)) {
                 atom = functionCall(atom);
             } else if (match(TokenType.DOT)) {
@@ -357,6 +380,11 @@ public final class Parser {
                     atom = attributeAssign(atom);
                 } else {
                     atom = attributeAccess(atom);
+                }
+            } else {
+                atom = indexAccess(atom);
+                if (match(TokenType.OP, "=")) {
+                    atom = indexAssign(atom);
                 }
             }
         }
