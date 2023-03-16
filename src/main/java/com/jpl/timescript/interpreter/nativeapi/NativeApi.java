@@ -5,6 +5,7 @@ import com.jpl.timescript.interpreter.ExecutionEngine;
 import com.jpl.timescript.interpreter.datatypes.*;
 import com.jpl.timescript.interpreter.environment.Environment;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -62,6 +63,22 @@ public final class NativeApi {
                 }
                 TimeScript.runtimeError("Non iterable object passed to charAt function");
                 return new TSNull();
+            }
+        });
+
+        addData("list", new TSFunction(List.of()) {
+            @Override
+            public TSObject call(ExecutionEngine engine, Environment environment) {
+                return new TSList(new ArrayList<>());
+            }
+        });
+
+        addData("add", new TSFunction(Arrays.asList("iterable", "value")) {
+            @Override
+            public TSObject call(ExecutionEngine engine, Environment environment) {
+                TSIterable iterable = (TSIterable) environment.get("iterable");
+                TSObject value = environment.get("value");
+                return iterable.append(value);
             }
         });
 

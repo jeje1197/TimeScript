@@ -338,6 +338,7 @@ public final class Parser {
         return new AstNode.IndexAccess(atom, expression);
     }
 
+    // "[" expr "]" "=" expr
     private static AstNode indexAssign(AstNode atom) {
         advance();
         AstNode expression = expectExpression();

@@ -41,6 +41,11 @@ public final class TSString extends TSObject implements TSIterable{
     }
 
     @Override
+    public TSObject append(TSObject value) {
+        return new TSString(this + value.toString());
+    }
+
+    @Override
     public TSObject add(TSObject other) {
         return new TSString(this + other.toString());
     }

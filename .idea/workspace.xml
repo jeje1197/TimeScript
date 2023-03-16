@@ -9,12 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Environment.java: Updated all methods to work properly with all environments in the chain.&#10;ExecutionEngine.java: Updated methods with scoping to keep track of environment before creating a new scope and deleting that scope.">
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Added index accessing/setting for iterable objects. Refactored functions to be declaration statements instead of expressions. Function calls were not changed.">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSList.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSIterable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSIterable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSString.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/datatypes/TSString.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/nativeapi/NativeApi.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/nativeapi/NativeApi.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,13 +42,26 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
-        <option value="Class" />
         <option value="Interface" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="d2a6396b-bbb9-4800-9e99-42a9fe2a1ace" />
+        <option name="url" value="https://github.com/jeje1197/TimeScript.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -322,11 +334,17 @@
       <option name="project" value="LOCAL" />
       <updated>1678934688230</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Added index accessing/setting for iterable objects. Refactored functions to be declaration statements instead of expressions. Function calls were not changed.">
+      <created>1678944672822</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1678944672822</updated>
+    </task>
+    <option name="localTasksCounter" value="30" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated parser to work with unary operations, binary operations and parenthesis." />
     <MESSAGE value="Created TSObject datatype to serve as the foundation of all data in the language." />
     <MESSAGE value="Created Visitor interface to make node accessing more efficient. Creating environment." />
     <MESSAGE value="Implemented if statements and while loops into the language." />
@@ -351,6 +369,7 @@
     <MESSAGE value="Parser.java: Refactoring parser to use block statements for function and class declarations. Grammar rules are now being commented above each method in the parser." />
     <MESSAGE value="Environment.java: Fixed containsKey() method. Now searches all environments in chain for symbols." />
     <MESSAGE value="Environment.java: Updated all methods to work properly with all environments in the chain.&#10;ExecutionEngine.java: Updated methods with scoping to keep track of environment before creating a new scope and deleting that scope." />
-    <option name="LAST_COMMIT_MESSAGE" value="Environment.java: Updated all methods to work properly with all environments in the chain.&#10;ExecutionEngine.java: Updated methods with scoping to keep track of environment before creating a new scope and deleting that scope." />
+    <MESSAGE value="Added index accessing/setting for iterable objects. Refactored functions to be declaration statements instead of expressions. Function calls were not changed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added index accessing/setting for iterable objects. Refactored functions to be declaration statements instead of expressions. Function calls were not changed." />
   </component>
 </project>
