@@ -32,7 +32,7 @@ public final class Environment {
     public TSObject get(String key) {
         Environment current = this;
         while (current != null) {
-            if (containsKeyLocally(key)) {
+            if (current.containsKeyLocally(key)) {
                 return current.getLocally(key);
             }
             current = current.parent;
@@ -47,7 +47,7 @@ public final class Environment {
     public void set(String key, TSObject value) {
         Environment current = this;
         while (current != null) {
-            if (containsKeyLocally(key)) {
+            if (current.containsKeyLocally(key)) {
                 current.setLocally(key, value);
                 return;
             }

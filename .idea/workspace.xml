@@ -9,13 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Parser.java: Refactoring parser to use block statements for function and class declarations. Grammar rules are now being commented above each method in the parser.">
+    <list default="true" id="8840a18e-ec59-4e53-99c3-c5b6b74b0ff1" name="Changes" comment="Environment.java: Fixed containsKey() method. Now searches all environments in chain for symbols.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/TimeScript.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/ExecutionEngine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/environment/Environment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/interpreter/environment/Environment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/AstNode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jpl/timescript/parser/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,18 +57,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/newuser/JavaWorkspace/TimeScript&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/Users/newuser/JavaWorkspace/TimeScript",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "inlay.hints"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.TimeScript">
     <configuration name="TimeScript (Read From File 1)" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="com.jpl.timescript.TimeScript" />
@@ -309,7 +305,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678907564245</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Environment.java: Fixed containsKey() method. Now searches all environments in chain for symbols.">
+      <created>1678918307343</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1678918307343</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -337,6 +340,7 @@
     <MESSAGE value="Added NativeApi.addData() method to provide a way to add variables/functions for embedded use." />
     <MESSAGE value="Updated true and false to always point to a single TSBoolean object for each in order to save memory." />
     <MESSAGE value="Parser.java: Refactoring parser to use block statements for function and class declarations. Grammar rules are now being commented above each method in the parser." />
-    <option name="LAST_COMMIT_MESSAGE" value="Parser.java: Refactoring parser to use block statements for function and class declarations. Grammar rules are now being commented above each method in the parser." />
+    <MESSAGE value="Environment.java: Fixed containsKey() method. Now searches all environments in chain for symbols." />
+    <option name="LAST_COMMIT_MESSAGE" value="Environment.java: Fixed containsKey() method. Now searches all environments in chain for symbols." />
   </component>
 </project>

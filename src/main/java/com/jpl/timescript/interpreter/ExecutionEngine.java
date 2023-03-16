@@ -106,14 +106,16 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
     @Override
     public TSObject visitBlockStatement(AstNode.BlockStatement node) throws Exception {
-        TSObject returnValue = nullObject;
         Environment previous = environment;
         environment = new Environment(environment);
+
+        TSObject returnValue = nullObject;
         for (AstNode statement: node.statements) {
             returnValue = statement.visit(this);
             if (shouldBreak || shouldContinue) break;
             if (shouldReturn) break;
         }
+
         environment = previous;
         return returnValue;
     }
@@ -217,9 +219,10 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         for (int i = 0; i < function.arity(); i++) {
             environment.setLocally(function.argumentNames.get(i), arguments.get(i));
         }
-        TSObject immediateValue = function.call(this, environment);
-        environment = previous;
 
+        TSObject immediateValue = function.call(this, environment);
+
+        environment = previous;
         shouldReturn = false;
         return function.isNative ? immediateValue : returnValue;
     }
