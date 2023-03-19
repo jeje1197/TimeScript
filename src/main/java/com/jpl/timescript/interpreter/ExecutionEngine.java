@@ -125,7 +125,9 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
         if (environment.containsKeyLocally(node.name)) {
             TimeScript.runtimeError("'" + node.name + "' has already been declared");
         }
-        environment.setLocally(node.name, node.expression.visit(this));
+
+        environment.setLocally(node.name, node.expression != null ?
+                node.expression.visit(this) : nullObject );
         return null;
     }
 
@@ -200,15 +202,24 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
             arguments.add(argument.visit(this));
         }
 
-        if (callee instanceof TSClass) {
-            TSClass classDefinition = (TSClass) callee;
-            return visitConstructor(classDefinition);
-        } else if (!(callee instanceof TSCallable)) {
+        if (!(callee instanceof TSCallable)) {
             TimeScript.runtimeError("Cannot be called");
             return null;
         }
 
-        TSFunction function = (TSFunction) callee;
+        TSFunction function = null;
+        TSObject valueAssignedAsThis = null;
+        if (callee instanceof TSClass classDefinition) {
+            valueAssignedAsThis = visitConstructor(classDefinition);
+            if (classDefinition.getField("constructor") instanceof TSFunction constructor) {
+                function = constructor;
+            } else {
+                return valueAssignedAsThis;
+            }
+        } else {
+            function = (TSFunction) callee;
+        }
+
         if (arguments.size() != function.arity()) {
             TimeScript.runtimeError("Expected " + function.arity() + " arguments, but" +
                     " received " + arguments.size());
@@ -216,19 +227,30 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
         Environment previous = environment;
         environment = new Environment(environment);
+        if (node.callee instanceof AstNode.AttributeAccess attributeAccessNode) {
+            valueAssignedAsThis = attributeAccessNode.structure.visit(this);
+        }
+
+        // If function is a constructor/belongs to a structure, pass the structure into the method as
+        // 'this'
+        if (valueAssignedAsThis != null) {
+            environment.setLocally("this", valueAssignedAsThis);
+        }
+
         for (int i = 0; i < function.arity(); i++) {
             environment.setLocally(function.argumentNames.get(i), arguments.get(i));
         }
 
         TSObject immediateValue = function.call(this, environment);
-
         environment = previous;
         shouldReturn = false;
+        if (callee instanceof TSClass) return valueAssignedAsThis;
         return function.isNative ? immediateValue : returnValue;
     }
 
-    public TSObject visitConstructor(TSClass classDefinition) {
-        return new TSInstance(classDefinition, new Environment());
+    public TSInstance visitConstructor(TSClass classDefinition) {
+        TSInstance newInstance = new TSInstance(classDefinition, new Environment());
+        return newInstance;
     }
 
     @Override
@@ -245,16 +267,17 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
             return null;
         }
 
-        Environment classEnvironment = new Environment(environment);
-        environment = classEnvironment;
+        // Add attributes to class definition
+        Environment previous = environment;
+        environment = new Environment(environment);
         for (AstNode declaration: node.statements) {
             declaration.visit(this);
         }
-        environment = classEnvironment.getParent();
+        TSClass classDefinition = new TSClass(node.className, environment);
+        environment = previous;
 
-        TSClass classDefinition = new TSClass(node.className, classEnvironment);
         environment.setLocally(node.className, classDefinition);
-        return null;
+        return nullObject;
     }
 
     @Override
@@ -279,7 +302,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
 
         TSStructure structure = (TSStructure) object;
         structure.setField(node.name, node.expression.visit(this));
-        return null;
+        return nullObject;
     }
 
     @Override

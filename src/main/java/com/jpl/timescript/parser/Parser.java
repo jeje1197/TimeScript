@@ -48,9 +48,9 @@ public final class Parser {
         return peek().type == TokenType.KEYWORD && peek().value.equals(keyword);
     }
 
-    private static boolean matchNext(TokenType type) {
-        return peekNext().type == type;
-    }
+//    private static boolean matchNext(TokenType type) {
+//        return peekNext().type == type;
+//    }
 
     private static boolean matchNext(TokenType type, String value) {
         return peekNext() != null && peekNext().type == type && peekNext().value.equals(value);
@@ -162,14 +162,16 @@ public final class Parser {
     // "var" ID ("=" expr)?
     private static AstNode variableDeclaration() {
         Token name;
-        AstNode expression;
+        AstNode expression = null;
         advance();
         if (!expect(TokenType.ID, "Expected identifier")) return null;
         name = advance();
-        if (!expect(TokenType.OP, "=", "Expected '='")) return null;
-        advance();
-        expression = expectExpression();
-        if (expression == null) return null;
+
+        if (match(TokenType.OP, "=")){
+            advance();
+            expression = expectExpression();
+            if (expression == null) return null;
+        }
         return new AstNode.VariableDeclaration(name, expression);
     }
 
@@ -294,10 +296,14 @@ public final class Parser {
     // "class" ID ("<-" expr)? blockStatement
     private static AstNode classDeclaration() {
         Token name;
+//        List<AstNode> inheritanceTree;
         List<AstNode> statements;
         advance();
         if (!expect(TokenType.ID, "Expected class identifier")) return null;
         name = advance();
+//        if (match(TokenType.C)) {
+//
+//        }
         if (!expect(TokenType.LBRACE, "Expected '{'")) return null;
         advance();
         statements = statements();
@@ -417,9 +423,12 @@ public final class Parser {
                 if (match("true") || match("false")) {
                     advance();
                     return new AstNode.Boolean(token);
-                } else if (matchKeyword("null")) {
+                } else if (match("null")) {
                     advance();
                     return new AstNode.Null();
+                } else if (match("this") || match("super")) {
+                    advance();
+                    return new AstNode.VariableAccess(token);
                 }
                 break;
             case OP:

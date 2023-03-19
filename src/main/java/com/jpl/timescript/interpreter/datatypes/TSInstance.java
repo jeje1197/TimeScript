@@ -21,11 +21,11 @@ public class TSInstance extends TSObject implements TSStructure {
 
     @Override
     public void setField(String key, TSObject value) {
-        environment.set(key, value);
+        environment.setLocally(key, value);
     }
 
     @Override
     public String toString() {
-        return "<"+ classDeclaration.className + ">";
+        return "<"+ classDeclaration.className + " object>";
     }
 }
