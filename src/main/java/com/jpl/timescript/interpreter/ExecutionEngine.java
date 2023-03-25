@@ -207,7 +207,7 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
             return null;
         }
 
-        TSFunction function = null;
+        TSFunction function;
         TSObject valueAssignedAsThis = null;
         if (callee instanceof TSClass classDefinition) {
             valueAssignedAsThis = visitConstructor(classDefinition);
@@ -225,16 +225,27 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
                     " received " + arguments.size());
         }
 
+        boolean accessedAsSuper = false;
         Environment previous = environment;
         environment = new Environment(environment);
         if (node.callee instanceof AstNode.AttributeAccess attributeAccessNode) {
             valueAssignedAsThis = attributeAccessNode.structure.visit(this);
+        } else if (node.callee instanceof AstNode.VariableAccess variableAccessNode) {
+            if (variableAccessNode.name.equals("super")) {
+                accessedAsSuper = true;
+            }
         }
 
         // If function is a constructor/belongs to a structure, pass the structure into the method as
         // 'this'
         if (valueAssignedAsThis != null) {
             environment.setLocally("this", valueAssignedAsThis);
+        }
+
+        // If function is obtained from 'super' variable access, then access the variable and
+        //
+        if (accessedAsSuper) {
+            environment.setLocally("this", environment.get("this"));
         }
 
         for (int i = 0; i < function.arity(); i++) {
@@ -249,14 +260,13 @@ public final class ExecutionEngine implements AstNode.Visitor<TSObject> {
     }
 
     public TSInstance visitConstructor(TSClass classDefinition) {
-        TSInstance newInstance = new TSInstance(classDefinition, new Environment());
-        return newInstance;
+        return new TSInstance(classDefinition, new Environment());
     }
 
     @Override
     public TSObject visitReturnStatement(AstNode.ReturnStatement node) throws Exception {
         shouldReturn = true;
-        returnValue = node.expression.visit(this);
+        returnValue = node.expression != null ? node.expression.visit(this): nullObject;
         return null;
     }
 
