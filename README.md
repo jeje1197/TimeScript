@@ -2,7 +2,7 @@
 TimeScript is a high-level, dynamically-typed programming language designed for embedding in applications.
 
 
-Example programs can be found in the [/examples](https://www.google.com) folder.
+Example programs can be found in the [/examples](https://github.com/jeje1197/TimeScript/tree/master/examples) folder.
 
 Data Types:
   - Number (Encompasses both int & float representations)
