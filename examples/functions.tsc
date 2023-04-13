@@ -1,0 +1,25 @@
+# Use the function keyword to declare functions in TimeScript
+
+
+function sayHi() {
+    println("Hi")
+}
+
+# Calling a function
+sayHi()
+
+
+
+# Declaring a function with parameters
+function addNums(a, b) {
+    return a + b
+}
+
+# Calling a function with parameters
+var result = addNums(5, 6)
+println(result)
+
+
+# Functions can be passed in TimeScript
+var myFunction = addNums
+println(myFunction)

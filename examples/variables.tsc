@@ -1,0 +1,20 @@
+# Use the var keyword to declare variables in TimeScript
+
+
+var name = "Mark"
+println("Name: " + name)
+
+
+# To change the value of a variable
+
+name = "Sally"
+println("Name: " + name)
+
+
+# Variables are dynamically typed so they can store any datatype.
+
+var myVar = 6.5
+println("\nBefore: myVar=" + myVar)
+
+myVar = "this is a string"
+println("After: myVar=" + myVar)

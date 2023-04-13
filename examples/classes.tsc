@@ -2,9 +2,6 @@
 
 # We'll get employee information and store it in an Employee object
 class Employee {
-    var name
-    var phone
-    var email
 
     function constructor(name, phone, email) {
         this.name = name
@@ -19,5 +16,4 @@ class Employee {
 }
 
 var employee = Employee("Joseph", "1234567890", "Joseph@gmail.com")
-print(employee.stringify())
-
+println(employee.stringify())

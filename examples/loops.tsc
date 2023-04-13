@@ -1,0 +1,8 @@
+# There is only one type of loop at the moment
+# while loops
+
+var i = 0
+while (i < 10) {
+    println("i: " + i)
+    i = i + 1
+}

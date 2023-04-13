@@ -1,0 +1,18 @@
+# If statements in the TimeScript language
+
+if (true) {
+    println("Condition is true")
+} else {
+    println("Condition is false")
+}
+
+
+var numberOfApples = 3
+
+if (numberOfApples == 0 ) {
+    println("There are no apples")
+} else if (numberOfApples == 12) {
+    println("You have a dozen apples")
+} else {
+    println("Number of apples: " + numberOfApples)
+}
