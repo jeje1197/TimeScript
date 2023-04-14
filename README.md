@@ -55,18 +55,19 @@ method which binds an object to an identifier at global scope.\
 
    TimeScript.run("myFunc()");
    ```
-
-
-
+\
+\
 Sample programs can be found in the [examples](https://github.com/jeje1197/TimeScript/tree/master/examples) folder.
 
 
 
-
+## Documentation
 ___
 
+### Version 1.0
+
 Data Types:
-  - Number (Single representation of integer & floating-point numbers)
+  - Number (A single representation for integers & floating-point numbers)
   - String
   - Boolean
   - Null
@@ -74,7 +75,7 @@ Data Types:
   - List
   - User-Defined Classes
 
- Future Features:
+ ### Future Features:
   - An import system
   - Inheritance
   - Interfaces
