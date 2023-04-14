@@ -4,24 +4,25 @@ in Java applications.
 
 ## How to Use
 ___
-Requirements:
+
+#### Requirements:
 - Java installed on your Computer
 
 ### Standalone
 
 1) Download the <b>TimeScript.jar</b> file from the [jars](https://github.com/jeje1197/TimeScript/tree/master/jars)
 directory
-2) Place it within your folder of choice
-3) Open your terminal/command line and navigate to the folder containing the TimeScript.jar file
-4) Run one of the following commands:
-   
-To run the REPL (Read-Eval-Print-Loop):
-   java -jar TimeScript.jar
-
-
-    To read from a file:
-    java -jar TimeScript.jar [filepath]
-
+2) Place it in your folder of choice
+3) Open your terminal / command line and navigate to the folder
+containing the TimeScript.jar file
+4) Run one of the following commands:\
+\
+   To run the REPL (Read-Eval-Print-Loop):\
+   &nbsp;&nbsp;&nbsp;&nbsp;```java -jar TimeScript.jar```
+\
+\
+    To execute a TimeScript file:\
+    &nbsp;&nbsp;&nbsp;&nbsp;```java -jar TimeScript.jar [filepath]```
 
 
 ### Embedded in a project
@@ -32,29 +33,47 @@ To run the REPL (Read-Eval-Print-Loop):
     [Tutorial for IntelliJ](https://www.geeksforgeeks.org/how-to-add-external-jar-file-to-an-intellij-idea-project/)\
     [Tutorial for Eclipse](https://www.wikihow.com/Add-JARs-to-Project-Build-Paths-in-Eclipse-(Java))
 
-3) Use the ```TimeScript.run(String code)``` method to run code.
-4) If you need to extend the functionality of the language to declare
-a new variable, function or class, use the 
+3) Use the ```TimeScript.run(String code)``` method to run a string of code\
+\
+   Ex:\
+   ```TimeScript.run("println(5 + 2)");```
+
+
+4) To extend TimeScript's functionality, use the\
 ```NativeApi.addData(String variableName, TSObject data)```
-method.
+method which binds an object to an identifier at global scope.\
+\
+   For example, adding a custom function and calling it:
+   ```
+   NativeApi.addData("myFunc", new TSFunction(List.of()) {
+       @Override
+       public TSObject call(ExecutionEngine engine, Environment environment) {
+           System.out.println("Custom function called!");
+           return new TSNull();
+       }
+   });
+
+   TimeScript.run("myFunc()");
+   ```
+
+
+
+Sample programs can be found in the [examples](https://github.com/jeje1197/TimeScript/tree/master/examples) folder.
 
 
 
 
+___
 
-
-Sample programs can be found in the [/examples](https://github.com/jeje1197/TimeScript/tree/master/examples) folder.
-
-Language Features
 Data Types:
-  - Number (Encompasses both int & float representations)
+  - Number (Single representation of integer & floating-point numbers)
   - String
-  - Boolean (true/false)
+  - Boolean
   - Null
   - Function
   - List
   - User-Defined Classes
- 
+
  Future Features:
   - An import system
   - Inheritance
