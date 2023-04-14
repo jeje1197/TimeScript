@@ -3,7 +3,6 @@ A high-level, dynamically-typed programming language designed for embedded use
 in Java applications.
 
 ## How to Use
-___
 
 #### Requirements:
 - Java installed on your Computer
@@ -62,7 +61,6 @@ Sample programs can be found in the [examples](https://github.com/jeje1197/TimeS
 
 
 ## Documentation
-___
 
 ### Version 1.0
 
